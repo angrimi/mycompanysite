@@ -28,6 +28,8 @@ body, html {
 
 /* 네비게이션 바 숨기기/보이기 */
 #navbar {
+  height: 90px; /* 기본값보다 크게 설정 */
+  padding: 20px 40px;
   position: fixed;
   top: 0;
   left: 0;
@@ -76,31 +78,86 @@ body, html {
   text-decoration: underline;
 }
 
-
-h1 {
-  font-size: clamp(2rem, 8vw, 6rem);
-  /* 
-    최소 2rem,
-    화면 너비(viewport width)의 8%까지 늘어나고,
-    최대 6rem까지 크기 제한 
-  */
+#section1 {
+  align-items: flex-start; /* 왼쪽 정렬 */
+  text-align: left;        /* 텍스트 정렬도 왼쪽 */
+  padding: 0 15vw; /* 좌우 15%씩 여백 */
+  box-sizing: border-box;
   font-weight: bold;
-  text-align: center;
 }
 
 
+#section2 {
+  align-items: flex-start; /* 왼쪽 정렬 */
+  text-align: left;        /* 텍스트 정렬도 왼쪽 */
+  padding: 0 15vw; /* 좌우 15%씩 여백 */
+  box-sizing: border-box;
+}
+#section2 h1 {
+  font-size: clamp(2rem, 8vw, 10rem);
+  /* 최소 2rem, 화면 너비(viewport width)의 8%까지 늘어나고, 최대 6rem까지 크기 제한*/
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+}
+#section2 h3 {
+  margin-top: 5px;
+  color: #888888;
+  margin-bottom: 120px;
+}
+
+#section3 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 내부 요소들 왼쪽 정렬 */
+  padding: 0 10vw;
+  font-size: 4rem;  
+}
+
+#section3 h2 {
+  text-align: left;
+  box-sizing: border-box;
+}
+
+#solution h2{
+  text-align: center;     /* 가운데 정렬 */
+  font-size: 3.5rem;      /* 글자 크기 (조절 가능) */
+  margin-top: 10px; 
+  margin-bottom: 100px;
+}
+
+#section4 {
+  align-items: flex-start; /* 왼쪽 정렬 */
+  text-align: left;        /* 텍스트 정렬도 왼쪽 */
+  padding: 0 10vw; /* 좌우 15%씩 여백 */
+  box-sizing: border-box;
+}
+
+br {
+  align-items: flex-start; /* 왼쪽 정렬 */
+  text-align: left;        /* 텍스트 정렬도 왼쪽 */
+}
+
+
+
+
 #footer {
-  background-color: #505050;   /* 네비게이션 바와 비슷한 색 */
+  background-color: #505050;
   color: white;
   padding: 20px 40px;
-  text-align: center;          /* 가운데 정렬 */
-  font-size: 1rem;
   box-sizing: border-box;
-  position: relative;          /* 기본 위치 */
-  width: 100%;                 /* 전체 너비 */
+  position: relative;
+  width: 100%;
+}
 
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
+  text-align: left;         /* 전체 텍스트 왼쪽 정렬 */
+  box-sizing: border-box;
 }
+
+#footer p {
+  margin: 0;
+  font-size: 1rem;
 }
