@@ -1,0 +1,106 @@
+/* 기본 스타일 */
+body, html {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth; /* 스크롤 부드럽게 */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* 섹션 스타일 */
+.section {
+  height: 100vh; /* 화면 전체 높이 */
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* 섹션마다 배경색 다르게 */
+#section1 { background-color: #ffffff;}
+#section2 { background-color: #ffffff;}
+#section3 { background-color: #000000fd; color: white;}
+#section4 { background-color: #000000; color: white; }
+
+/* 네비게이션 바 숨기기/보이기 */
+#navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;  /* ✅ 전체 너비로 늘림 */
+  background-color: rgba(44, 62, 80, 0.9);
+  color: white;
+  display: flex;
+  justify-content: space-between;  /* 좌우 끝 정렬 */
+  align-items: center;             /* 세로 가운데 정렬 */
+  padding: 15px 50px;
+  box-sizing: border-box;
+  opacity: 0.8; /* 반투명 */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 1000;
+}
+
+#navbar.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+#navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#navbar ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: 0.2s;
+}
+
+#navbar ul li a i {
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+
+#navbar ul li a:hover {
+  text-decoration: underline;
+}
+
+
+h1 {
+  font-size: clamp(2rem, 8vw, 6rem);
+  /* 
+    최소 2rem,
+    화면 너비(viewport width)의 8%까지 늘어나고,
+    최대 6rem까지 크기 제한 
+  */
+  font-weight: bold;
+  text-align: center;
+}
+
+
+#footer {
+  background-color: #505050;   /* 네비게이션 바와 비슷한 색 */
+  color: white;
+  padding: 20px 40px;
+  text-align: center;          /* 가운데 정렬 */
+  font-size: 1rem;
+  box-sizing: border-box;
+  position: relative;          /* 기본 위치 */
+  width: 100%;                 /* 전체 너비 */
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+}
