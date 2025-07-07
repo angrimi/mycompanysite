@@ -49,6 +49,7 @@ body, html {
   opacity: 0.8; /* 반투명 */
   transition: transform 0.3s ease, opacity 0.3s ease;
   z-index: 1000;
+  font-weight: 470;
 }
 #navbar.hidden {
   transform: translateY(-100%);
@@ -69,13 +70,13 @@ body, html {
   transition: 0.2s;
   font-size: 25px;
 }
+#navbar ul li a:hover {
+  color: #0026ff;
+}
 
 #navbar ul li a i {
   font-size: 1.2rem;
   vertical-align: middle;
-}
-#navbar ul li a:hover {
-  text-decoration: underline;
 }
 
 #section1 {
@@ -519,6 +520,7 @@ hr.super-wide {
   font-size: 2rem;
   margin-bottom: 5px;
 }
+
 .contact-info {
   display: flex;
   flex-direction: column;
@@ -550,19 +552,35 @@ hr.contact-line {
   position: relative;
 }
 
-#contact-section2{
-  min-height: 100vh; 
-  background-color: #a9caff;
+#contact-section2 {
+  min-height: 80vh;
+  background-color: #b9d4ff;
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;      /* ❗좌우 배치 핵심 */
+  justify-content: center;
   align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 0;
   font-size: 2rem;
   transition: transform 0.5s ease, opacity 0.5s ease;
-  justify-content: center;  
 }
 
 
+.map {
+  width: 45%;                 
+  text-align: center;        
+}
+.map img {
+  width: 100%;               
+  height: auto;              
+  border-radius: 10px;        
+}
+.map p {
+  font-size: 1.5rem;
+  text-align: left;
+}
 
 /*project.html 화면*/
 #project-section1 {
@@ -653,6 +671,7 @@ hr.contact-line {
   color: white;
   padding: 40px 5vw;
   font-family: 'Pretendard', sans-serif;
+  gap: 40px;
 }
 
 #project-section2 h1{
