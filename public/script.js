@@ -138,53 +138,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 협력사 로고
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.partner-logos');
-  const items = document.querySelectorAll('.partner-item');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-
-  const logosPerPage = 6;
-  const totalLogos = items.length;
-  const maxIndex = Math.ceil(totalLogos / logosPerPage) - 1;
+  const logos = document.querySelector('.partner-logos');
 
   let currentIndex = 0;
-  let interval;
+  const slideCount = document.querySelectorAll('.partner-item').length;
+  const slideWidth = 1000; // 이미지 한 장 크기
 
-  function updateSlider() {
-    const itemWidth = items[0].offsetWidth;
-    const gap = 20;
-    const moveX = currentIndex * (itemWidth + gap) * logosPerPage;
-
-    container.style.transform = `translateX(-${moveX}px)`;
-
-    prevBtn.disabled = currentIndex === 0;
-    nextBtn.disabled = currentIndex === maxIndex;
+  // 👉 슬라이드 이동 함수
+  function moveToSlide(index) {
+    logos.style.transform = `translateX(-${index * slideWidth}px)`;
   }
 
-  function autoSlide() {
-    interval = setInterval(() => {
-      currentIndex = (currentIndex + 1) > maxIndex ? 0 : currentIndex + 1;
-      updateSlider();
-    }, 3000);
+  // 👉 다음 슬라이드로 이동
+  function goToNextSlide() {
+    currentIndex = (currentIndex + 1) % slideCount; // 🔁 마지막 → 처음
+    moveToSlide(currentIndex);
   }
 
-  function resetAutoSlide() {
-    clearInterval(interval);
-    autoSlide();
+  // 👉 이전 슬라이드로 이동
+  function goToPrevSlide() {
+    currentIndex = (currentIndex - 1 + slideCount) % slideCount; // 🔁 처음 → 마지막
+    moveToSlide(currentIndex);
   }
 
-  prevBtn.addEventListener('click', () => {
-    currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
-    updateSlider();
-    resetAutoSlide();
+
+  // ✅ 자동 슬라이드 (3초마다)
+  let autoSlide = setInterval(goToNextSlide, 3000);
+
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // 한 번만 작동
+        }
+      });
+    },
+    {
+      threshold: 0.1,
+    }
+  );
+
+  document.querySelectorAll('.history-list li').forEach((li, i) => {
+    li.style.transitionDelay = `${i * 0.05}s`; // 계단식 애니메이션
+    observer.observe(li);
   });
-
-  nextBtn.addEventListener('click', () => {
-    currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
-    updateSlider();
-    resetAutoSlide();
-  });
-
-  updateSlider();
-  autoSlide();
 });
