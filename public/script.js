@@ -1,50 +1,97 @@
-// 네비게이션 바 보이기/숨기기 로직
-let lastScrollY = window.scrollY;
-const navbar = document.getElementById('navbar');
+//스크롤
+const container = document.querySelector('.scroll-container');
+const sections = document.querySelectorAll('.section');  // .scroll-page → .section 변경
+let currentSection = 0;
+let isScrolling = false;
 
-window.addEventListener('scroll', function() {
-  const navbar = document.getElementById('navbar');
-  // 항상 보이게 하려면 숨김 클래스를 아예 안 붙임
-  // 또는 필요하면 다른 조건으로 수정 가능
-  navbar.classList.remove('hidden');
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const faders = document.querySelectorAll('.fade-in');
-
-  const appearOptions = {
-    threshold: 0.2
-  };
-
-  const appearOnScroll = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target); // 한 번만 실행
-    });
-  }, appearOptions);
-
-  faders.forEach(fader => {
-    appearOnScroll.observe(fader);
+function scrollToSection(index) {
+  if (index < 0 || index >= sections.length) return;
+  isScrolling = true;
+  container.scrollTo({
+    top: sections[index].offsetTop,
+    behavior: 'smooth'
   });
+  setTimeout(() => {
+    isScrolling = false;
+  }, 800);
+}
+
+container.addEventListener('wheel', (e) => {
+  if (isScrolling) return;
+
+  if (e.deltaY > 0) {
+    if (currentSection < sections.length - 1) {
+      currentSection++;
+      scrollToSection(currentSection);
+    }
+  } else {
+    if (currentSection > 0) {
+      currentSection--;
+      scrollToSection(currentSection);
+    }
+  }
 });
 
-// navar
+
 document.addEventListener("DOMContentLoaded", () => {
+  // 네비게이션 로딩
   fetch("navbar.html")
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById("navbar-container").innerHTML = data;
-    });
-});
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar-container").innerHTML = data;
 
-document.addEventListener("DOMContentLoaded", () => {
+    // ✅ 네비바 로딩 후 바인딩
+    const navbar = document.getElementById('navbar');
+    const scrollContainer = document.querySelector('.scroll-container');
+
+    scrollContainer.addEventListener('scroll', () => {
+      if (scrollContainer.scrollTop > 10) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  });
+
+
+  // 푸터 로딩
   fetch("footer.html")
     .then(res => res.text())
     .then(data => {
       document.getElementById("footer-container").innerHTML = data;
     });
+
+  // fade-in 효과
+  const faders = document.querySelectorAll('.fade-in');
+  const appearOptions = {
+    threshold: 0.2
+  };
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    });
+  }, appearOptions);
+  faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+  });
+
+
+
+
+  // 탭 UI
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.tab-content .content').forEach(c => c.classList.remove('active'));
+      const target = tab.getAttribute('data-target');
+      document.getElementById(target).classList.add('active');
+    });
+  });
 });
+
 
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
@@ -139,33 +186,55 @@ document.addEventListener('DOMContentLoaded', () => {
 // 협력사 로고
 document.addEventListener('DOMContentLoaded', () => {
   const logos = document.querySelector('.partner-logos');
+  let slides = document.querySelectorAll('.partner-item');
+  const slideWidth = slides[0].offsetWidth;
+  const slideCount = slides.length;
 
-  let currentIndex = 0;
-  const slideCount = document.querySelectorAll('.partner-item').length;
-  const slideWidth = 1000; // 이미지 한 장 크기
+  // 👉 클론 생성
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slideCount - 1].cloneNode(true);
+  logos.appendChild(firstClone);
+  logos.insertBefore(lastClone, slides[0]);
+
+  // 👉 clone 추가 후, 다시 slide 리스트 갱신
+  slides = document.querySelectorAll('.partner-item');
+
+  // 👉 초기 위치 설정
+  let currentIndex = 1;
+  const totalSlides = slides.length;
+  logos.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+
+  // 👉 transitionend를 전역에서 1회만 등록
+  logos.addEventListener('transitionend', () => {
+    if (currentIndex === totalSlides - 1) {
+      logos.style.transition = 'none';
+      currentIndex = 1;
+      logos.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+    }
+    if (currentIndex === 0) {
+      logos.style.transition = 'none';
+      currentIndex = totalSlides - 2;
+      logos.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+    }
+  });
 
   // 👉 슬라이드 이동 함수
   function moveToSlide(index) {
-    logos.style.transform = `translateX(-${index * slideWidth}px)`;
+    logos.style.transition = 'transform 0.5s ease-in-out';
+    logos.style.transform = `translateX(-${slideWidth * index}px)`;
   }
 
-  // 👉 다음 슬라이드로 이동
+  // 👉 다음 슬라이드
   function goToNextSlide() {
-    currentIndex = (currentIndex + 1) % slideCount; // 🔁 마지막 → 처음
+    currentIndex++;
     moveToSlide(currentIndex);
   }
 
-  // 👉 이전 슬라이드로 이동
-  function goToPrevSlide() {
-    currentIndex = (currentIndex - 1 + slideCount) % slideCount; // 🔁 처음 → 마지막
-    moveToSlide(currentIndex);
-  }
-
-
-  // ✅ 자동 슬라이드 (3초마다)
+  // 👉 자동 슬라이드
   let autoSlide = setInterval(goToNextSlide, 3000);
-
 });
+
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
