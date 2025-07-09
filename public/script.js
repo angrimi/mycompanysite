@@ -1,20 +1,27 @@
 //스크롤
 const container = document.querySelector('.scroll-container');
-const sections = document.querySelectorAll('.section');  // .scroll-page → .section 변경
+const sections = document.querySelectorAll('.section'); 
+console.log('container:', container);
 let currentSection = 0;
 let isScrolling = false;
 
 function scrollToSection(index) {
   if (index < 0 || index >= sections.length) return;
   isScrolling = true;
-  container.scrollTo({
-    top: sections[index].offsetTop,
-    behavior: 'smooth'
-  });
-  setTimeout(() => {
-    isScrolling = false;
-  }, 800);
+
+  // 스크롤하려는 목표 위치
+  let targetTop = sections[index].offsetTop;
+
+  // 최대 스크롤 가능한 위치 계산
+  const maxScrollTop = container.scrollHeight - container.clientHeight;
+
+  // 목표 위치가 최대 스크롤 위치보다 크면 maxScrollTop으로 맞춤
+  if (targetTop > maxScrollTop) { targetTop = maxScrollTop;}
+
+  container.scrollTo({ top: targetTop, behavior: 'smooth' });
+  setTimeout(() => { isScrolling = false;}, 800);
 }
+
 
 container.addEventListener('wheel', (e) => {
   if (isScrolling) return;
@@ -32,29 +39,56 @@ container.addEventListener('wheel', (e) => {
   }
 });
 
-
 document.addEventListener("DOMContentLoaded", () => {
-  // 네비게이션 로딩
+  // 네비바 로딩 및 이벤트 바인딩
   fetch("navbar.html")
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById("navbar-container").innerHTML = data;
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbar-container").innerHTML = data;
+      const navbar = document.getElementById('navbar');
+      const container = document.querySelector('.scroll-container');
+      const sections = document.querySelectorAll('.section');
 
-    // ✅ 네비바 로딩 후 바인딩
-    const navbar = document.getElementById('navbar');
-    const scrollContainer = document.querySelector('.scroll-container');
+      // 네비바 색상 변경
+      container.addEventListener('scroll', () => {
+        if (container.scrollTop > 10) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
 
-    scrollContainer.addEventListener('scroll', () => {
-      if (scrollContainer.scrollTop > 10) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
+      // 스크롤 섹션 이동 함수
+      function scrollToSection(index) {
+        if (index < 0 || index >= sections.length) return;
+        isScrolling = true;
+        container.scrollTo({
+          top: sections[index].offsetTop,
+          behavior: 'smooth'
+        });
+        setTimeout(() => {
+          isScrolling = false;
+        }, 800);
       }
+
+      // 휠 이벤트 (한 장씩 스크롤)
+      container.addEventListener('wheel', (e) => {
+        if (isScrolling) return;
+        if (e.deltaY > 0) {
+          if (currentSection < sections.length - 1) {
+            currentSection++;
+            scrollToSection(currentSection);
+          }
+        } else {
+          if (currentSection > 0) {
+            currentSection--;
+            scrollToSection(currentSection);
+          }
+        }
+      });
     });
-  });
 
-
-  // 푸터 로딩
+  // 푸터 fetch (별도)
   fetch("footer.html")
     .then(res => res.text())
     .then(data => {
@@ -91,6 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
 
 
 document.querySelectorAll('.tab').forEach(tab => {
@@ -183,7 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// 협력사 로고
+// 협력사 로고 
+/*
 document.addEventListener('DOMContentLoaded', () => {
   const logos = document.querySelector('.partner-logos');
   let slides = document.querySelectorAll('.partner-item');
@@ -233,8 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 👉 자동 슬라이드
   let autoSlide = setInterval(goToNextSlide, 3000);
 });
-
-
+*/
 
 
 document.addEventListener('DOMContentLoaded', () => {
