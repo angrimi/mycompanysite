@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       });
-    });
+      });
 
   // 푸터 fetch (별도)
   fetch("footer.html")
@@ -180,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+///////////////////section4////////////////////////
 document.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.tab');
   const contents = document.querySelectorAll('.tab-content .content');
@@ -218,77 +219,66 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// 협력사 로고 
-/*
-document.addEventListener('DOMContentLoaded', () => {
-  const logos = document.querySelector('.partner-logos');
-  let slides = document.querySelectorAll('.partner-item');
-  const slideWidth = slides[0].offsetWidth;
-  const slideCount = slides.length;
 
-  // 👉 클론 생성
-  const firstClone = slides[0].cloneNode(true);
-  const lastClone = slides[slideCount - 1].cloneNode(true);
-  logos.appendChild(firstClone);
-  logos.insertBefore(lastClone, slides[0]);
+///////////////////section4////////////////////////
+window.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".business-grid3");
+  const originalItems = [...document.querySelectorAll(".item")];
 
-  // 👉 clone 추가 후, 다시 slide 리스트 갱신
-  slides = document.querySelectorAll('.partner-item');
+  const repeatCount = 3; // 원본을 몇 번 반복할지
+  for (let i = 0; i < repeatCount - 1; i++) {
+    originalItems.forEach(item => {
+      const clone = item.cloneNode(true);
+      clone.classList.add("clone");
+      container.appendChild(clone);
+    });
+  }
 
-  // 👉 초기 위치 설정
-  let currentIndex = 1;
-  const totalSlides = slides.length;
-  logos.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+  const allItems = [...container.querySelectorAll(".item")];
+  const itemWidth = originalItems[0].offsetWidth;
+  const originalTotalWidth = itemWidth * originalItems.length;
 
-  // 👉 transitionend를 전역에서 1회만 등록
-  logos.addEventListener('transitionend', () => {
-    if (currentIndex === totalSlides - 1) {
-      logos.style.transition = 'none';
-      currentIndex = 1;
-      logos.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
-    }
-    if (currentIndex === 0) {
-      logos.style.transition = 'none';
-      currentIndex = totalSlides - 2;
-      logos.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
-    }
+  // 초기 위치 (첫 번째 원본 그룹 시작점)
+  container.scrollLeft = 0;
+
+  let autoScrollSpeed = 3;
+  let isPaused = false;
+
+  container.addEventListener("mouseenter", () => isPaused = true);
+  container.addEventListener("mouseleave", () => isPaused = false);
+
+  allItems.forEach(item => {
+    item.addEventListener("mouseenter", () => isPaused = true);
+    item.addEventListener("mouseleave", () => isPaused = false);
   });
 
-  // 👉 슬라이드 이동 함수
-  function moveToSlide(index) {
-    logos.style.transition = 'transform 0.5s ease-in-out';
-    logos.style.transform = `translateX(-${slideWidth * index}px)`;
-  }
+  function autoScroll() {
+    if (!isPaused) {
+      container.scrollLeft += autoScrollSpeed;
 
-  // 👉 다음 슬라이드
-  function goToNextSlide() {
-    currentIndex++;
-    moveToSlide(currentIndex);
-  }
-
-  // 👉 자동 슬라이드
-  let autoSlide = setInterval(goToNextSlide, 3000);
-});
-*/
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const observer = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target); // 한 번만 작동
-        }
-      });
-    },
-    {
-      threshold: 0.1,
+      // 너무 많이 가면 원본 시작 위치로 리셋 (눈에 안 띄게)
+      if (container.scrollLeft >= originalTotalWidth) {
+        container.scrollLeft = 0;
+      }
     }
-  );
+    requestAnimationFrame(autoScroll);
+  }
 
-  document.querySelectorAll('.history-list li').forEach((li, i) => {
-    li.style.transitionDelay = `${i * 0.05}s`; // 계단식 애니메이션
-    observer.observe(li);
+  autoScroll();
+
+  // ✅ 카드 클릭 시 가운데 정렬
+  allItems.forEach(item => {
+    item.addEventListener("click", () => {
+      const containerWidth = container.clientWidth;
+      const cardOffsetLeft = item.offsetLeft - container.offsetLeft;
+      const cardWidth = item.offsetWidth;
+
+      const targetScrollLeft = cardOffsetLeft - (containerWidth / 2 - cardWidth / 2);
+
+      container.scrollTo({
+        left: targetScrollLeft,
+        behavior: "smooth"
+      });
+    });
   });
 });
