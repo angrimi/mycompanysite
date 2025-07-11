@@ -82,6 +82,64 @@ container.addEventListener('wheel', (e) => {
     }
   }
 });
+//////////////////////section0////////////////////
+document.addEventListener("DOMContentLoaded", function () {
+    const text = "레몬소프트의 기술을 소개합니다";
+    const target = document.getElementById("typing-text");
+
+    let i = 0;
+    function typing() {
+      if (i < text.length) {
+        target.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, 200); // 타자 속도 조절 (100ms)
+      }
+    }
+
+    typing();
+  });
+  //////////////////////section0->section2////////////////////
+  
+
+
+
+  //////////////////////section2////////////////////
+document.addEventListener("DOMContentLoaded", () => {
+  const slides = document.querySelectorAll(".slide2");
+  const navItems = document.querySelectorAll(".nav-item");
+  let current = 0;
+  const interval = 4000; // 4초마다 전환
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === index);
+    });
+    navItems.forEach((nav, i) => {
+      nav.classList.toggle("active", i === index);
+    });
+    current = index; // 현재 인덱스 갱신
+  }
+
+  function nextSlide() {
+    let nextIndex = (current + 1) % slides.length;
+    showSlide(nextIndex);
+  }
+
+  // 목차 클릭 이벤트 연결
+  navItems.forEach((nav, index) => {
+    nav.addEventListener("click", () => {
+      showSlide(index);
+      // 자동 슬라이드 타이머를 초기화(리셋)하고 싶으면 아래 주석 해제
+      // clearInterval(autoSlide);
+      // autoSlide = setInterval(nextSlide, interval);
+    });
+  });
+
+  // 초기화
+  showSlide(current);
+  let autoSlide = setInterval(nextSlide, interval);
+});
+
 
 document.addEventListener("DOMContentLoaded", () => {
   ///////////////////////////////////////////////////////////////////// 네비바 로딩 및 이벤트 바인딩
