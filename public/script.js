@@ -1,3 +1,47 @@
+window.addEventListener("DOMContentLoaded", () => {
+  const slides = document.querySelectorAll('.slide');
+  const texts = [
+    {
+      title: "레몬소프트와 시작하세요.",
+      desc: "첫 번째 영상에 맞는 문구"
+    },
+    {
+      title: "미래를 만나는 메타버스",
+      desc: "두 번째 영상에 맞는 문구"
+    },
+    {
+      title: "AI와 손잡고 나아가다",
+      desc: "세 번째 영상에 맞는 문구"
+    }
+  ];
+
+  const titleEl = document.querySelector('.slide-text h1');
+  const descEl = document.querySelector('.slide-text p');
+
+  let current = 0;
+
+  function showSlide(index) {
+    slides.forEach((video, i) => {
+      video.classList.toggle('active', i === index);
+      video.pause();
+      video.currentTime = 0;
+    });
+
+    slides[index].play();
+    titleEl.textContent = texts[index].title;
+    descEl.textContent = texts[index].desc;
+  }
+
+  slides.forEach((video, i) => {
+    video.addEventListener('ended', () => {
+      current = (i + 1) % slides.length;
+      showSlide(current);
+    });
+  });
+
+  showSlide(current);
+});
+
 //스크롤
 const container = document.querySelector('.scroll-container');
 const sections = document.querySelectorAll('.section'); 
@@ -40,7 +84,7 @@ container.addEventListener('wheel', (e) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 네비바 로딩 및 이벤트 바인딩
+  ///////////////////////////////////////////////////////////////////// 네비바 로딩 및 이벤트 바인딩
   fetch("navbar.html")
   .then(res => res.text())
   .then(data => {

@@ -86,7 +86,7 @@ body, html {
 /*************************************************************navbar***********************************************************/
 #navbar {
   height: 70px;
-  padding: 15px 50px;
+  padding: 20px 50px;
   position: fixed;
   top: 0;
   left: 0;
@@ -104,7 +104,7 @@ body, html {
 
 .menu {
   display: flex;
-  gap: 30px;
+  gap: 50px;
   flex: 1 1 auto;
   justify-content: center; /* 메뉴 가운데 정렬 */
   list-style: none;
@@ -118,7 +118,6 @@ body, html {
   font-size: 18px;
 }
 
-
 #navbar.scrolled {
   background-color: rgba(255, 255, 255, 0.8);
   color: black;
@@ -130,7 +129,8 @@ body, html {
   padding: 0;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 50px;
+  text-align: center;
 }
 
 #navbar ul li a {
@@ -227,264 +227,70 @@ body, html {
   color: transparent;
 }
 
-
-
-
-
 /*******************************************index.html***************************************/
 #section1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: left;
-  height: 100vh;
-  padding: 80px 15vw;
-  box-sizing: border-box;
-  background: linear-gradient(135deg, #0f203f, #1e3c72, #2a5298, #4b6cb7, #7b9acc, #a0c4ff);
-  background-size: 400% 400%;
-  animation: gradientMove 12s ease infinite;
-  color: white;
   position: relative;
+  width: 100%;
+  height: 100vh;
   overflow: hidden;
-  /*background-image: url('images/section1bg.mp4');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;*/
-
+  color: white;
+  box-sizing: border-box; padding: 0;
 }
 
-/* 그라디언트 배경 애니메이션 */
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-/* ✅ 반응형 */
-@media (max-width: 768px) {
-  #section1 {
-    padding: 60px 8vw;
-  }
-
-  .neon-text {
-    font-size: 2rem;
-  }
-
-  .neon-subtext {
-    font-size: 1rem;
-  }
+.slider {
+  position: absolute; top: 0; left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
 }
 
-.fade-in {
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    text-align: center;
-    font-size: 23px;
-    font-weight: 400;
-    line-height: 1.5;
-    margin-bottom: 90px;
-    font-family: 'kopubmediom', sans-serif;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
 }
-.fade-in.visible {
+
+.slide.active {
   opacity: 1;
-  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.slide-text {
+  position: absolute;
+  z-index: 2;
+  bottom: 15%;
+  left: 10%;
+  color: white;
+  text-shadow: 1px 1px 10px rgba(0,0,0,0.7);
+}
+
+.slide-text h1 {
+  font-size: 3rem;
+  margin: 0 0 40px; /*too:0 right&left: 0 bottom*/
+}
+
+.slide-text p {
+  font-size: 1.5rem;
+  margin: 0;
 }
 
 #section2 {
-  height: 100%;
-  background-color: #ffffff;
-  color:#000000;
-  position: relative;
-  padding: 50px 20px;
-  overflow: hidden;
-}
-#section2::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 400px;
-  display: block;
-  background: radial-gradient(ellipse at bottom right,  #fcf3a7  0%, transparent 50%);
-  clip-path: ellipse(100% 100% at 50% 100%);
-  opacity: 0.6;
-  pointer-events: none;
-  z-index: 0;
-
-}
-
-#section2::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 400px;
-  display: block;
-  background: radial-gradient(ellipse at top left, #8fd6fc  0%,#9cdafc 30%, transparent 45%);
-  clip-path: ellipse(100% 80% at 0% 0%);
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: 0;
-}
-
-
-#section2 > * {
-  position: relative;
-  z-index: 1;
-}
-
-#section2 h3 {
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-  margin-top: 100px;
-  margin-bottom: 20px;
-  color:#001fce;
-  font-family: 'kopubbold', sans-serif;
-}
-.business-grid {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 30px;
-  min-width: 800px;
-  background-color: transparent;
-}
-
-.business-item {
-  flex: 1 1 calc(25% - 40px); /* 4등분 - 간격 보정 */
-  text-align: center;
-}
-
-.business-item img {
-  width: 120px; 
-  height: 120px;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-.business-item p {
-  font-size: 1rem;
-  color: #000000;
-  font-weight: 600;
-  font-family: 'kopubmediom', sans-serif;
-}
-@media (max-width: 768px) {
-  .business-item {
-    flex: 1 1 45%;  /* 2개씩 배치 */
-  }
-}
-
-@media (max-width: 480px) {
-  .business-item {
-    flex: 1 1 100%; /* 1개씩 세로 배치 */
-  }
-}
-
-#section3 {
-  height: 100%;
-  background-color: #ffffff;
-  color:#000000;
-  position: relative; 
-  padding: 50px 20px;
-  overflow: hidden; /* 가상요소가 넘쳐도 잘림 */
-}
-
-#section3::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 400px;
-
-  background: radial-gradient(
-    ellipse at top right,
-        #fcf3a7 0%, transparent 50%
-  );
-  clip-path: ellipse(100% 100% at 50% 0);
-  opacity: 0.6;
-  pointer-events: none;
-  z-index: 0;
-}
-#section3::before { content: ""; position: absolute; bottom: 0;  left: 0; width: 100%; height: 400px;
-  background: radial-gradient( ellipse at  bottom,   #8fd6fc  0%,#9cdafc 30%, transparent 70%); clip-path: ellipse(100% 100% at 50% 70%);  opacity: 0.3; pointer-events: none; z-index: 0;}
-
-
-#section3 > * {
-  position: relative;
-  z-index: 1;
-}
-.section3-content {
-  margin-top: 100px; /* 여기만 내려감 */
-  position: relative;
-  z-index: 1; /* ::after 배경보다 위로 */
-}
-/* 5개 사진 그리드 스타일 */
-.business-grid2 {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 25px;
-  min-width: 800px;
-  margin-top: 100px;
-}
-
-.business-item {
-  flex: 1 1 calc(20% - 40px); /* 5등분 - 간격 보정 */
-  text-align: center;
-}
-.business-item img {
-  width: 120px; 
-  height: 120px;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-.fade-in {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    text-align: center;
-    font-size: 23px;
-    font-weight: 400;
-    line-height: 1.5;
-    margin-bottom: 90px;
-    font-family: 'kopubmediom', sans-serif;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* section2 business-item 순차 딜레이 */
-#section2 .business-item.fade-in:nth-child(1) { transition-delay: 0.1s; }
-#section2 .business-item.fade-in:nth-child(2) { transition-delay: 0.3s; }
-#section2 .business-item.fade-in:nth-child(3) { transition-delay: 0.5s; }
-#section2 .business-item.fade-in:nth-child(4) { transition-delay: 0.7s; }
-
-/* section3 business-item 순차 딜레이 */
-#section3 .business-item.fade-in:nth-child(1) { transition-delay: 0.1s; }
-#section3 .business-item.fade-in:nth-child(2) { transition-delay: 0.3s; }
-#section3 .business-item.fade-in:nth-child(3) { transition-delay: 0.5s; }
-#section3 .business-item.fade-in:nth-child(4) { transition-delay: 0.7s; }
-#section3 .business-item.fade-in:nth-child(5) { transition-delay: 0.9s; }
-
-#section4 {
   margin-bottom: 70px;
   min-height: 950px;
-  background-image: url("images/technology.jpg"); /* ✅ 이미지 경로 */
+  background-color: #000000;
   background-size: cover;       /* 이미지가 영역을 꽉 채우도록 */
   background-position: center;  /* 중앙 정렬 */
   background-repeat: no-repeat; /* 반복 방지 */
-  color: #000000;
   position: relative;
   overflow-y: visible; /* 세로 오버플로우만 보이게 */
   overflow-x: hidden;
 }
 
-#section4 h3 {
+#section2 h3 {
   padding-left: 30px; 
   font-size: 2rem;
   font-weight: bold;
@@ -556,15 +362,6 @@ body, html {
 /* 호버 시만 보이게 */
 .item:hover::before {
   opacity: 1;
-}
-.item img {
-  width: 100px;
-  height: 100px;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  border-radius: 6px;
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
 }
 
 .description h4 {
