@@ -39,24 +39,54 @@ container.addEventListener('wheel', (e) => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  // 네비바 로딩 및 이벤트 바인딩
-  fetch("navbar.html")
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById("navbar-container").innerHTML = data;
-      const navbar = document.getElementById('navbar');
-      const container = document.querySelector('.scroll-container');
-      const sections = document.querySelectorAll('.section');
 
-      // 네비바 색상 변경
-      container.addEventListener('scroll', () => {
-        if (container.scrollTop > 10) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
+document.addEventListener("DOMContentLoaded", () => {
+// 네비바 로딩 및 이벤트 바인딩
+  fetch("navbar.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar-container").innerHTML = data;
+
+    // ✅ 모든 드롭다운에 이벤트 연결
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+      const panel = dropdown.querySelector('.dropdown-panel');
+      if (!panel) return;
+
+      dropdown.addEventListener('mouseenter', () => {
+        panel.style.display = 'flex';
       });
+
+      dropdown.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+          if (!panel.matches(':hover')) {
+            panel.style.display = 'none';
+          }
+        }, 100);
+      });
+
+      panel.addEventListener('mouseenter', () => {
+        panel.style.display = 'flex';
+      });
+
+      panel.addEventListener('mouseleave', () => {
+        panel.style.display = 'none';
+      });
+    });
+    
+    // ✅ 기존 스크롤 처리 로직 이어붙이기
+    const navbar = document.getElementById('navbar');
+    const container = document.querySelector('.scroll-container');
+    const sections = document.querySelectorAll('.section');
+
+    container.addEventListener('scroll', () => {
+      if (container.scrollTop > 10) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
 
       // 스크롤 섹션 이동 함수
       function scrollToSection(index) {
@@ -128,20 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    // 모든 탭에서 active 클래스 제거
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    // 클릭한 탭에 active 추가
-    tab.classList.add('active');
-
-    // 모든 콘텐츠 숨기기
-    document.querySelectorAll('.tab-content .content').forEach(c => c.classList.remove('active'));
-    // 클릭한 탭의 data-target 값으로 해당 콘텐츠 보여주기
-    const target = tab.getAttribute('data-target');
-    document.getElementById(target).classList.add('active');
-  });
-});
 
 
 document.addEventListener('DOMContentLoaded', () => {
