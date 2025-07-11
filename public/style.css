@@ -79,12 +79,13 @@ body, html {
 #section4 { background-color: #ffffff; color: rgb(0, 0, 0); }
 
 .logo img {
-  height: 45px;  /* 필요에 따라 조절 */
-  object-fit: contain;
+  padding-top: 15px;
+  height: 30px;  /* 필요에 따라 조절 */
+  object-fit: contain; flex: 0 0 auto;
 }
 /*************************************************************navbar***********************************************************/
 #navbar {
-  height: 90px;
+  height: 70px;
   padding: 15px 50px;
   position: fixed;
   top: 0;
@@ -98,16 +99,30 @@ body, html {
   box-sizing: border-box;
   transition: all 0.3s ease;
   z-index: 1000;
-  font-weight: 470;
+  font-weight: 430;
 }
-#naver:hover {
-  background-color:rgba(3, 3, 3, 0.8);
-  color: #fff
+
+.menu {
+  display: flex;
+  gap: 30px;
+  flex: 1 1 auto;
+  justify-content: center; /* 메뉴 가운데 정렬 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
+
+.menu li a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 18px;
+}
+
+
 #navbar.scrolled {
   background-color: rgba(255, 255, 255, 0.8);
   color: black;
-  
+  transition: all 0.3s ease;
 }
 #navbar ul {
   list-style: none;
@@ -122,14 +137,32 @@ body, html {
   text-decoration: none;
   font-size: 20px;
   font-weight: 500;
-  transition: 0.2s;
+  transition: 0.3s;
   color: inherit; 
   display: inline-block;
 }
-#navbar.scrolled:hover{
-  background-color:rgba(3, 3, 3, 0.8);
-  color: #fff;
+#navbar.scrolled-hover,
+#navbar:hover {
+  background-color: rgba(3, 3, 3, 0.8);
+  color: white;
 }
+#navbar:hover ul li a:hover {
+  background: linear-gradient(to right, #fcf3a7, #9cdafc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+/* 기본 hover 그라데이션 효과 */
+#navbar ul li a:hover,
+#navbar ul li.active > a {
+  background: linear-gradient(to right, #fcf3a7, #9cdafc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
 #navbar.scrolled ul li a:hover {
   background: linear-gradient(to right, #fcf3a7, #9cdafc);
   -webkit-background-clip: text;
@@ -143,13 +176,13 @@ body, html {
 }
 
 .dropdown-panel {
- display: flex;  /* display는 항상 flex 유지 */
+ display: flex;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 
   position: fixed;
-  top: 90px;
+  top: 70px;
   left: 0;
   width: 100vw;
   background-color:rgba(3, 3, 3, 0.8);
@@ -162,7 +195,7 @@ body, html {
   min-height: 150px;
   flex-wrap: nowrap;
 
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.1s ease;
 }
 
 .dropdown-wrapper:hover .dropdown-panel {
@@ -193,6 +226,8 @@ body, html {
   background-clip: text;
   color: transparent;
 }
+
+
 
 
 

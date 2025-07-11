@@ -39,41 +39,93 @@ container.addEventListener('wheel', (e) => {
   }
 });
 
-
 document.addEventListener("DOMContentLoaded", () => {
-// 네비바 로딩 및 이벤트 바인딩
+  // 네비바 로딩 및 이벤트 바인딩
   fetch("navbar.html")
   .then(res => res.text())
   .then(data => {
     document.getElementById("navbar-container").innerHTML = data;
 
-    // ✅ 모든 드롭다운에 이벤트 연결
     const dropdowns = document.querySelectorAll('.dropdown');
+    let currentPanel = null;   // 현재 열린 하단 메뉴
+    let hideTimeout = null;    // 닫기 타이머
+
+    function showPanel(panel) {
+      // 닫기 타이머 있으면 취소
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+        hideTimeout = null;
+      }
+
+      // 이전 열린 메뉴가 있으면 바로 닫기 (애니메이션 적용)
+      if (currentPanel && currentPanel !== panel) {
+        currentPanel.style.opacity = '0';
+        currentPanel.style.visibility = 'hidden';
+        currentPanel.style.pointerEvents = 'none';
+        currentPanel.parentElement.classList.remove('active'); // 이전 메뉴 .active 제거
+      }
+
+      // 새 메뉴 열기
+      panel.style.display = 'flex'; // 항상 flex 유지한다면 이 부분 생략 가능
+      requestAnimationFrame(() => {
+        panel.style.opacity = '1';
+        panel.style.visibility = 'visible';
+        panel.style.pointerEvents = 'auto';
+      });
+
+      panel.parentElement.classList.add('active'); // 현재 메뉴 .active 추가
+      currentPanel = panel;
+    }
+
+    function hidePanel(panel) {
+      panel.style.opacity = '0';
+      panel.style.visibility = 'hidden';
+      panel.style.pointerEvents = 'none';
+      panel.style.display = 'none'; // 즉시 숨김
+
+      if (currentPanel === panel) currentPanel = null;
+
+      // 타이머 있으면 정리
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+        hideTimeout = null;
+      }
+
+      panel.parentElement.classList.remove('active'); // 닫힐 때 .active 제거
+    }
 
     dropdowns.forEach(dropdown => {
       const panel = dropdown.querySelector('.dropdown-panel');
       if (!panel) return;
 
       dropdown.addEventListener('mouseenter', () => {
-        panel.style.display = 'flex';
+        showPanel(panel);
       });
 
       dropdown.addEventListener('mouseleave', () => {
-        setTimeout(() => {
+        hideTimeout = setTimeout(() => {
           if (!panel.matches(':hover')) {
-            panel.style.display = 'none';
+            hidePanel(panel);
           }
         }, 100);
       });
 
       panel.addEventListener('mouseenter', () => {
-        panel.style.display = 'flex';
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+          hideTimeout = null;
+        }
+        showPanel(panel);
       });
 
       panel.addEventListener('mouseleave', () => {
-        panel.style.display = 'none';
+        hideTimeout = setTimeout(() => {
+          hidePanel(panel);
+        }, 100);
       });
     });
+
+
     
     // ✅ 기존 스크롤 처리 로직 이어붙이기
     const navbar = document.getElementById('navbar');
@@ -116,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       });
-      });
+  });
 
   // 푸터 fetch (별도)
   fetch("footer.html")
@@ -141,19 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
     appearOnScroll.observe(fader);
   });
 
-
-
-
-  // 탭 UI
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      document.querySelectorAll('.tab-content .content').forEach(c => c.classList.remove('active'));
-      const target = tab.getAttribute('data-target');
-      document.getElementById(target).classList.add('active');
-    });
-  });
 });
 
 
