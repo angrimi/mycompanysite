@@ -118,40 +118,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //////////////////////section2////////////////////
 document.addEventListener("DOMContentLoaded", () => {
+  const slidesWrapper = document.querySelector(".slides-wrapper");
   const slides = document.querySelectorAll(".slide2");
   const navItems = document.querySelectorAll(".nav-item");
+  const totalSlides = slides.length;
   let current = 0;
-  const interval = 4000; // 4초마다 전환
-
+  const interval = 4000;
+  const slideWidth = slides[0].getBoundingClientRect().width + 20;
   function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle("active", i === index);
-    });
+    // index에 따라 translateX 이동 (각 슬라이드는 100% 너비 차지)
+    slidesWrapper.style.transform = `translateX(-${index * 100}%)`;
+
     navItems.forEach((nav, i) => {
       nav.classList.toggle("active", i === index);
     });
-    current = index; // 현재 인덱스 갱신
+
+    current = index;
   }
 
-  function nextSlide() {
-    let nextIndex = (current + 1) % slides.length;
-    showSlide(nextIndex);
-  }
-
-  // 목차 클릭 이벤트 연결
   navItems.forEach((nav, index) => {
     nav.addEventListener("click", () => {
       showSlide(index);
-      // 자동 슬라이드 타이머를 초기화(리셋)하고 싶으면 아래 주석 해제
-      // clearInterval(autoSlide);
-      // autoSlide = setInterval(nextSlide, interval);
+      clearInterval(autoSlide);
+      autoSlide = setInterval(nextSlide, interval);
     });
   });
 
-  // 초기화
+  function nextSlide() {
+    let nextIndex = (current + 1) % totalSlides;
+    showSlide(nextIndex);
+  }
+
   showSlide(current);
   let autoSlide = setInterval(nextSlide, interval);
 });
+
 
 
 
