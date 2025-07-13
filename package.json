@@ -18,6 +18,7 @@
   "homepage": "https://github.com/angrimi/mycompanysite#readme",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "three": "^0.178.0"
   }
 }

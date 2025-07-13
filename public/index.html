@@ -9,11 +9,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LEMONSOFT</title>
   <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/examples/jsm/controls/OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js",
+    "three/examples/jsm/loaders/FontLoader": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/FontLoader.js",
+    "three/examples/jsm/geometries/TextGeometry": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/geometries/TextGeometry.js",
+    "three/examples/jsm/loaders/TTFLoader": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/TTFLoader.js"
+    }
+  }
+</script>
 </head>
 <body>
     <div id="navbar-container"></div>
       <!-- 섹션들 -->
     <div class="scroll-container">
+
         <section id="section1" class="section">
           <div class="slider">
             <video src="images/Aimv.mp4" class="slide active"  muted autoplay playsinline></video>
@@ -24,10 +36,12 @@
             <h1>레몬소프트와 시작하세요.</h1>
             <p>첫 번째 영상에 맞는 문구</p>
           </div>
+          <div class="slide-indicator">
+              <span class="slide-dot active"></span>
+              <span class="slide-dot"></span>
+              <span class="slide-dot"></span>
+            </div>
         </section>
-
-
-
 
     <section id="section0" class="section">
       <h3 id="typing-text" class="typing"></h3>
@@ -98,46 +112,45 @@
       </div>
     </section>
 
-
-
     <section id="section2" class="section">
+  <div class="section2-wrapper">
+    <!-- ✅ 목차 영역 -->
+    <ul class="slide-nav">
+      <li class="nav-item active"><span class="dot"></span> project1</li>
+      <li class="nav-item"><span class="dot"></span> project2</li>
+      <li class="nav-item"><span class="dot"></span> project3</li>
+      <li class="nav-item"><span class="dot"></span> project4</li>
+      <li class="nav-item"><span class="dot"></span> project5</li>
+      <li class="nav-item"><span class="dot"></span> project6</li>
+      <li class="nav-item"><span class="dot"></span> project7</li>
+    </ul>
+
+    <!-- ✅ 콘텐츠 영역 -->
+    <div class="slider-container">
       <h1>레몬소프트의 프로젝트를 소개합니다</h1>
 
-      <div class="section2-wrapper">
-        <!-- ✅ 목차 영역 -->
-        <ul class="slide-nav">
-            <li class="nav-item active"><span class="dot"></span> AI 기술</li>
-            <li class="nav-item"><span class="dot"></span> IoT 기술</li>
-            <li class="nav-item"><span class="dot"></span> 에너지</li>
-            <li class="nav-item"><span class="dot"></span> 메타버스</li>
-            <li class="nav-item"><span class="dot"></span> AR 기술</li>
-            <li class="nav-item"><span class="dot"></span> VR 기술</li>
-            <li class="nav-item"><span class="dot"></span> 데이터 분석</li>
-        </ul>
-
-        <!-- ✅ 슬라이드 영역 -->
-        <div class="slider-container">
-          <div class="slide2">
-            <img src="images/aboutimg.jpg" alt="IoT 기술">
-            <div class="slide2-text">
-            <h2>AI 기술</h2>
-            <p>여기는 AI 기술 설명입니다. 구체적으로 적어주세요.</p></div>
+      <!-- ✅ 슬라이드들 -->
+      <div class="slide2">
+        <img src="images/project1.png" alt="IoT 기술" />
+        <div class="slide2-text">
+          <h2>AI 기술</h2>
+          <p>여기는 AI 기술 설명입니다. 구체적으로 적어주세요.</p>
         </div>
-          
-        <div class="slide2">
-          <img src="images/aboutimg.jpg" alt="IoT 기술">
+      </div>
+      <div class="slide2">
+          <img src="images/project2.png" alt="IoT 기술">
           <div class="slide2-text">
           <h2>IoT 기술</h2>
           <p>IoT 관련된 설명입니다. 디바이스 연결 및 응용 사례 등.</p></div>
         </div>
         <div class="slide2">
-          <img src="images/technology.jpg" alt="데이터 분석">
+          <img src="images/project3.png" alt="데이터 분석">
           <div class="slide2-text">
           <h2>에너지 프로젝트</h2>
           <p>에너지 기술 소개, 관련된 설명입니다</p></div>
         </div>
         <div class="slide2">
-          <img src="images/technology.jpg" alt="데이터 분석">
+          <img src="images/project4.png" alt="데이터 분석">
           <div class="slide2-text">
           <h2>메타버스</h2>
           <p>메타버스 기술 소개, 관련된 설명입니다</p></div>
@@ -160,9 +173,13 @@
           <h2>데이터 분석</h2>
           <p>빅데이터 기반의 분석 솔루션 소개, 관련된 설명입니다.</p></div>
         </div>
-        </div>
-      </div>
+    </div>
+  </div>
 </section>
+
+  <!--<section id="section3D" class="section">
+     <canvas id="three-canvas"></canvas>
+  </section>-->
 
 
     <section id="section5" class="section">
@@ -188,6 +205,11 @@
     </section>
     <div id="footer-container"></div>
     </div>
-  <script src="script.js"></script>
+    
+  <!-- ✅ 너가 작성한 3D 코드 -->
+
+  <!--<script type="module" src="background3D.js"></script>-->
+
+  <script type="module" src="script.js"></script>
 </body>
 </html>

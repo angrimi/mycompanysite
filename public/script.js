@@ -16,7 +16,8 @@ window.addEventListener("DOMContentLoaded", () => {
   ];
 
   const titleEl = document.querySelector('.slide-text h1');
-  const descEl = document.querySelector('.slide-text p');
+  const descEls = document.querySelectorAll('.slide-text p');
+  const dots = document.querySelectorAll('.slide-dot');
 
   let current = 0;
 
@@ -29,12 +30,24 @@ window.addEventListener("DOMContentLoaded", () => {
 
     slides[index].play();
     titleEl.textContent = texts[index].title;
-    descEl.textContent = texts[index].desc;
+    descEls[1].textContent = texts[index].desc;
+
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
   }
 
   slides.forEach((video, i) => {
     video.addEventListener('ended', () => {
       current = (i + 1) % slides.length;
+      showSlide(current);
+    });
+  });
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      current = i;
       showSlide(current);
     });
   });
@@ -139,6 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
   showSlide(current);
   let autoSlide = setInterval(nextSlide, interval);
 });
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
