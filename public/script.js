@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const navItems = document.querySelectorAll(".nav-item");
   const originalSlides = Array.from(document.querySelectorAll(".slide2"));
   const slideWidth = 800;
-  const peek = 50;
+  const peek = 80;
 
   // ✅ 슬라이드 복제 (무한 루프용)
   const firstClone = originalSlides[0].cloneNode(true);
