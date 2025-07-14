@@ -101,7 +101,10 @@ body, html {
   z-index: 1000;
   font-weight: 430;
 }
-
+#navbar.hidden {
+  transform: translateY(-100%);
+  /* 배경 투명 유지하려면 background-color 건드리지 말고 transform만 */
+}
 .menu {
   display: flex;
   gap: 50px;
@@ -271,12 +274,12 @@ body, html {
 }
 
 .slide-text h1 {
-  font-size: 3rem;
+  font-size: 4.5rem;
   margin: 0 0 40px;
 }
 
 .slide-text p {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin: 0;
 }
 /********************************슬라이드 인디케이터*****************************/
@@ -316,61 +319,56 @@ body, html {
 
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100vh; overflow-y: hidden;
 
 }
 
 .slider-container {
- display: flex;
-  flex-direction: column;
-  align-items: center;   /* ⬅️ 가운데 정렬 핵심 */
-  justify-content: center;
-  width: 100%;
-  max-width: 1200px;     /* 너무 넓지 않게 */
-  margin: 0 auto;
-  padding: 0 20px; overflow: hidden;  position: relative;
-  box-sizing: border-box; 
+   overflow: hidden;
+  position: relative;
+  max-width: 1000px;
+  margin: auto;
+  padding: 0;
 }
 .slides-wrapper {
-  display: flex;             /* 가로 배열 */
-  transition: transform 0.7s ease-in-out; /* 부드러운 이동 */
-  width: 100%;
+  display: flex;     /* 가로 배열 */
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);/* 부드러운 이동 */  padding: 0 50px; box-sizing: content-box;
+  width: max-content; transform: translateX(0); overflow: visible;
 }
 .slide2 {
-  display: flex;      flex: 0 0 85%;
-  margin: 0 30px;
+  display: flex;      flex: 0 0 800px; transform: translateY(0); overflow-y: hidden;
+  margin: 0; justify-content: flex-start;
   box-sizing: border-box;
   flex-direction: column;
-  align-items: center;justify-content: center;
-  transition: opacity 1s ease-in-out; 
+  align-items: center; justify-content: center;
+  transition: opacity 1s ease-in-out; transition: transform 0.7s ease-in-out; 
   text-align: left;    /* 텍스트 기본은 왼쪽 정렬 */ 
-  gap: 20px; width: 100%;
+ 
 }
 
 .slide2 img {
-  max-width: 100%; 
-  width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
+  width: 90%;
+  height: 400px;
+  display: block; 
+  margin: 0 auto; margin-bottom: 40px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 #section2 h1 {
-  margin-top: 50px; margin-bottom: 100px;
+  margin-bottom: 70px; margin-top: 30px;
   font-size: 2rem; text-align: center;
 }
 
 .slide2-text {
-  display: flex;
+  display: flex; min-height: 80px;
   align-items: flex-start;
-  gap: 40px; /* h2와 p 사이 간격 */
-  width: 100%;
-  max-width: 1000px;
-  text-align: left;
+  gap: 50px; /* h2와 p 사이 간격 */
+  width: 95%;
+  max-width: 800px;
+  text-align: left; padding-left: 30px;
 }
 .slide2-text h2 {
   margin:0; min-width: 160px;
-  font-size: 2rem;  font-weight: 700; 
+  font-size: 1.6rem;  font-weight: 700; 
   white-space: nowrap;
 }
 
@@ -378,7 +376,21 @@ body, html {
   font-size: 1.5rem;   flex: 1;
   color: #333; text-align: left; margin: 0;white-space: nowrap;
 }
-
+.slide2-text.hidden {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.5s ease, height 0.5s ease;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.slide2-text.visible {
+  opacity: 1;
+  height: auto;
+  pointer-events: auto;
+}
 .section2-wrapper {
   display: flex;
   flex-direction: row;
@@ -393,6 +405,9 @@ body, html {
   box-sizing: border-box;
 }
 
+body, html, #section2, .slider-container {
+  overflow-x: hidden;
+}
 
 .slide-nav {
   position: sticky;
@@ -415,7 +430,7 @@ body, html {
 
 .slide-nav .nav-item .dot {
   position: absolute;
-  left: 50px;
+  left: 65px;
   top: 50%;
   transform: translateY(-50%);
   width: 8px;
@@ -444,6 +459,33 @@ body, html {
   width: 80%;
   margin-left: 100px;  min-height: 400px;
   overflow: hidden;
+}
+
+.prev-btn, .next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  font-size: 2rem;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+.prev-btn:hover, .next-btn:hover {
+  background-color: #eee;
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
 }
 
 /******************section0*************************/
@@ -678,17 +720,17 @@ body, html {
 
 /**********************************************************ABOUT US.html 화면********************************************************************/
 #aboutsectionimg {
-  width: 100vw;
-  height: 80vh;
-  background-image: url("images/aboutimg.jpg");
+  width: 100%;
+  height: 500px;
+  background-image: url("images/business.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative; /* h2 위치 조절용 */
   display: flex;
   justify-content: center;
-  align-items: center;
-  color: white; animation: zoomIn 5s ease-in-out forwards;
+  align-items: center; 
+  color: white; animation: zoomIn 5s ease-in-out forwards; overflow-x: hidden;
 }
 
 /* 🔁 줌인 애니메이션 정의 */
@@ -715,7 +757,7 @@ body, html {
   font-size: 2rem;
   transition: transform 0.5s ease, opacity 0.5s ease;
   justify-content: flex-start; 
-  padding: 200px 10px 40px 10px; 
+  padding: 200px 10px 40px 10px;  overflow-x: hidden;
 }
 #about h3{
   font-size: 2rem;
