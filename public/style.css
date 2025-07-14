@@ -421,10 +421,9 @@ body, html, #section2, .slider-container {
 
 .slide-nav .nav-item {
   position: relative;
-  pointer-events: wnap;
   padding-left: 80px;
-  font-size: 16px; font-family: 'kopubmediom'; 
-  color: #333;  line-height: 1.6; font-weight: bold;
+  font-size: 14px; font-family: 'gmaketmedium'; 
+  color: #bababa;  line-height: 2; font-weight: bold;
   transition: color 0.3s ease, font-weight 0.3s ease;
 }
 
@@ -441,18 +440,18 @@ body, html, #section2, .slider-container {
 }
 
 .slide-nav .nav-item.active {
-  color: #007bff;
+  color: #001aff;
   font-weight: bold;  border-left: none; /* 기존 선 없애기 */
   position: relative;
-  padding-left: 80px; 
+  padding-left: 80px; font-size: 18px;
 }
 
 .slide-nav .nav-item.active .dot {
-  background-color: #007bff;
+  background-color: #001aff;
 }
 
 .slide-nav .nav-item:hover {
-  background-color: transparent; color: #007bff;
+  background-color: transparent; color: #001aff;
 }
 .slider-container {
   position: relative;

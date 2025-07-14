@@ -146,33 +146,30 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const updateUI = () => {
-  const realIndex = currentIndex - 1; // 0부터 시작하는 인덱스
+    const realIndex = (currentIndex - 1 + originalSlides.length) % originalSlides.length;
 
-  // 인디케이터 업데이트
-  navItems.forEach((nav, i) => nav.classList.toggle("active", i === realIndex));
+    navItems.forEach((nav, i) => nav.classList.toggle("active", i === realIndex));
 
-  // ✅ 텍스트는 원본 슬라이드에서만 제어
-  originalSlides.forEach((slide, i) => {
-    const text = slide.querySelector(".slide2-text");
-    if (text) {
-      if (i === realIndex) {
-        text.classList.remove("hidden");
-      } else {
-        text.classList.add("hidden");
+    originalSlides.forEach((slide, i) => {
+      const text = slide.querySelector(".slide2-text");
+      if (text) {
+        if (i === realIndex) {
+          text.classList.remove("hidden");
+        } else {
+          text.classList.add("hidden");
+        }
       }
-    }
-  });
-};
+    });
+  };
 
-
-  // ✅ 트랜지션 끝나면 위치 리셋 (무한 루프 효과)
+  // ✅ 트랜지션 끝나면 위치 리셋
   wrapper.addEventListener("transitionend", () => {
     if (currentIndex === 0) {
       moveTo(originalSlides.length, false);
-      updateUI(originalSlides.length - 1);
+      updateUI();
     } else if (currentIndex === originalSlides.length + 1) {
       moveTo(1, false);
-      updateUI(0);
+      updateUI();
     }
   });
 
@@ -180,15 +177,19 @@ document.addEventListener("DOMContentLoaded", () => {
   navItems.forEach((nav, i) => {
     nav.addEventListener("click", () => {
       moveTo(i + 1);
-      updateUI(i);
+      updateUI();
       resetAuto();
     });
   });
 
   const next = () => {
-    moveTo(currentIndex + 1);
-    const realIndex = currentIndex % originalSlides.length;
-    updateUI(realIndex);
+    let nextIndex = currentIndex + 1;
+
+    moveTo(nextIndex);
+
+    if (nextIndex !== originalSlides.length + 1) {
+      updateUI();
+    }
   };
 
   let auto = setInterval(next, 4000);
@@ -199,10 +200,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ✅ 초기 세팅
   moveTo(1, false);
-  updateUI(0);
+  updateUI();
 });
-
-
 
 
 
