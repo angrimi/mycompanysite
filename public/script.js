@@ -400,88 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const tabs = document.querySelectorAll('.tab');
-  const contents = document.querySelectorAll('.tab-content .content');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetId = tab.getAttribute('data-target');
-
-      // 탭 버튼 active 처리
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-
-      // 콘텐츠 전환 애니메이션
-      contents.forEach(content => {
-        if (content.id === targetId) {
-          content.style.display = 'block'; // 다시 보이게
-          content.classList.remove('active'); // 애니메이션 초기화
-          void content.offsetWidth; // 리플로우로 transition 강제 재실행
-          content.classList.add('active'); // 애니메이션 다시 실행
-        } else {
-          content.classList.remove('active');
-          content.style.display = 'none';
-        }
-      });
-    });
-  });
-
-  // 페이지 로딩 시 첫 탭 자동 애니메이션 (선택 사항)
-  const defaultContent = document.querySelector('.tab-content .content.active');
-  if (defaultContent) {
-    defaultContent.style.display = 'block';
-    void defaultContent.offsetWidth;
-    defaultContent.classList.add('active');
-  }
-});
-
-///////////////////section4////////////////////////
-document.addEventListener('DOMContentLoaded', () => {
-  const tabs = document.querySelectorAll('.tab');
-  const contents = document.querySelectorAll('.tab-content .content');
-
-  // 탭 클릭 시 내용 전환 + 애니메이션
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetId = tab.getAttribute('data-target');
-
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-
-      contents.forEach(content => {
-        if (content.id === targetId) {
-          content.style.display = 'block';
-          content.classList.remove('active');      // 애니메이션 초기화
-          void content.offsetWidth;                // 리플로우 트릭
-          content.classList.add('active');         // 다시 애니메이션 실행
-        } else {
-          content.classList.remove('active');
-          content.style.display = 'none';
-        }
-      });
-    });
-  });
-
-  // 페이지 처음 로드 시 회사소개 자동 페이드인 처리
-  const defaultTab = document.querySelector('.tab[data-target="about"]');
-  const defaultContent = document.querySelector('#about');
-
-  if (defaultContent && defaultTab) {
-    defaultTab.classList.add('active');              // 탭 버튼 활성화
-    defaultContent.style.display = 'block';          // 보여주기
-    void defaultContent.offsetWidth;                  // 트랜지션 강제 트리거
-    defaultContent.classList.add('active');           // 아래에서 위로 페이드인
-  }
-});
-
-
-///////////////////section4////////////////////////
+//////////////////section4////////////////////////
 window.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".business-grid3");
   const originalItems = [...document.querySelectorAll(".item")];
@@ -542,4 +461,80 @@ window.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
+});
+
+/////////////////////////////////about.html 탭, 통합 Observer/////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', () => {
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  let historyObserverInitialized = false;
+
+  // 탭 버튼 클릭 이벤트
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-tab');
+
+      // 탭 버튼 active 토글
+      tabButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // 탭 내용 active 토글
+      tabContents.forEach(tab => {
+        tab.classList.remove('active');
+      });
+      const targetTab = document.getElementById(targetId);
+      targetTab.classList.add('active');
+
+      // 연혁 탭 열릴 때만 observer 실행 (단, 한 번만)
+      if (targetId === 'tab4' && !historyObserverInitialized) {
+        initHistoryObserver();
+        historyObserverInitialized = true;
+      }
+    });
+  });
+
+  // 연혁 관찰 함수
+  function initHistoryObserver() {
+    const yearFixed = document.getElementById('year-fixed');
+    const items = document.querySelectorAll('.history-item');
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5
+    };
+
+    let visibleItems = [];
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const year = entry.target.dataset.year;
+        if (entry.isIntersecting) {
+          visibleItems.push(entry.target);
+        } else {
+          visibleItems = visibleItems.filter(el => el !== entry.target);
+        }
+      });
+
+      if (visibleItems.length > 0) {
+        const center = window.innerHeight / 2;
+        let closest = visibleItems[0];
+        let closestDistance = Math.abs(closest.getBoundingClientRect().top - center);
+
+        visibleItems.forEach(el => {
+          const dist = Math.abs(el.getBoundingClientRect().top - center);
+          if (dist < closestDistance) {
+            closest = el;
+            closestDistance = dist;
+          }
+        });
+
+        const currentYear = closest.dataset.year;
+        yearFixed.textContent = currentYear;
+      }
+    }, observerOptions);
+
+    items.forEach(item => observer.observe(item));
+  }
 });
