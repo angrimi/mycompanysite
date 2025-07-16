@@ -467,55 +467,106 @@ window.addEventListener("DOMContentLoaded", () => {
 document.addEventListener('DOMContentLoaded', () => {
   const tabButtons = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
+  const yearFixed = document.getElementById('year-fixed');
+  const historyWrapper = document.querySelector('.history-wrapper');
+  const textYear = document.querySelector('.history-title .text-year'); // 흐름 속 큰 년도
+  const tab4 = document.getElementById('tab4');
+  const historyItems = document.querySelectorAll('.history-item');
+
+  const fixedTriggerY = 100; // 고정 트리거 위치(px)
 
   let historyObserverInitialized = false;
 
-  // 탭 버튼 클릭 이벤트
+  // 탭 버튼 클릭 이벤트 처리
   tabButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const targetId = btn.getAttribute('data-tab');
 
-      // 탭 버튼 active 토글
       tabButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // 탭 내용 active 토글
-      tabContents.forEach(tab => {
-        tab.classList.remove('active');
-      });
+      tabContents.forEach(tab => tab.classList.remove('active'));
       const targetTab = document.getElementById(targetId);
       targetTab.classList.add('active');
 
-      // 연혁 탭 열릴 때만 observer 실행 (단, 한 번만)
-      if (targetId === 'tab4' && !historyObserverInitialized) {
-        initHistoryObserver();
-        historyObserverInitialized = true;
+      if (targetId === 'tab4') {
+        yearFixed.style.display = 'block';
+        if (!historyObserverInitialized) {
+          initHistoryObserver();
+          historyObserverInitialized = true;
+        }
+      } else {
+        yearFixed.style.display = 'none';
       }
     });
   });
 
-  // 연혁 관찰 함수
-  function initHistoryObserver() {
-    const yearFixed = document.getElementById('year-fixed');
-    const items = document.querySelectorAll('.history-item');
+  // 스크롤 이벤트 - 현재 가장 가까운 연혁 연도 업데이트
+   window.addEventListener('scroll', () => {
+  if (!yearFixed || !textYear || !historyWrapper) return;
+    const fixedTriggerY = 120;
+  const textYearRect = textYear.getBoundingClientRect();
+  const wrapperRect = historyWrapper.getBoundingClientRect();
 
+
+  if (textYearRect.top <= fixedTriggerY && wrapperRect.bottom > fixedTriggerY) {
+    // 고정 텍스트 표시
+    yearFixed.style.display = 'block';
+    // yearFixed.style.position = 'fixed';
+    // yearFixed.style.top = fixedTriggerY + 'px';
+    // yearFixed.style.left = '20px';
+
+
+    // text-year에 opacity 조절로 자연스러운 사라짐
+    textYear.style.opacity = '0';
+
+    // 가장 가까운 history-item 기준 년도 업데이트
+    let closestYear = '';
+    let minDist = Infinity;
+    const viewportCenter = window.innerHeight / 2;
+
+    historyItems.forEach(item => {
+      const rect = item.getBoundingClientRect();
+      const dist = Math.abs(rect.top - viewportCenter);
+      if (rect.top <= window.innerHeight && rect.bottom >= 0 && dist < minDist) {
+        minDist = dist;
+        closestYear = item.dataset.year;
+      }
+    });
+
+    if (closestYear) yearFixed.innerText = closestYear;
+
+  } else {
+    // 고정 텍스트 숨기기
+    yearFixed.style.display = 'none';
+
+    // text-year 보이게, opacity 부드럽게 변경
+    textYear.style.opacity = '1';
+
+    // 초기 큰 년도 세팅
+    if (historyItems.length > 0) {
+      textYear.innerText = historyItems[0].dataset.year;
+    }
+  }
+});
+
+  // 페이지 로딩 시 초기 세팅
+  if (historyItems.length > 0) {
+    textYear.innerText = historyItems[0].dataset.year;
+  }
+
+  // IntersectionObserver로 초기 동기화 (옵션)
+  function initHistoryObserver() {
     const observerOptions = {
       root: null,
       rootMargin: '0px',
       threshold: 0.5
     };
 
-    let visibleItems = [];
-
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const year = entry.target.dataset.year;
-        if (entry.isIntersecting) {
-          visibleItems.push(entry.target);
-        } else {
-          visibleItems = visibleItems.filter(el => el !== entry.target);
-        }
-      });
+      const visibleItems = entries
+        .filter(entry => entry.isIntersecting)
+        .map(entry => entry.target);
 
       if (visibleItems.length > 0) {
         const center = window.innerHeight / 2;
@@ -532,9 +583,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const currentYear = closest.dataset.year;
         yearFixed.textContent = currentYear;
+        if (textYear) {
+          textYear.textContent = currentYear;
+        }
       }
     }, observerOptions);
 
-    items.forEach(item => observer.observe(item));
+    historyItems.forEach(item => observer.observe(item));
+  }
+
+  // 초기 로딩 시 tab4 활성화 상태에 따라 처리
+  if (tab4.classList.contains('active')) {
+    yearFixed.style.display = 'block';
+    if (!historyObserverInitialized) {
+      initHistoryObserver();
+      historyObserverInitialized = true;
+    }
+  } else {
+    yearFixed.style.display = 'none';
   }
 });
+

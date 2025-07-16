@@ -463,18 +463,18 @@ body, html, #section2, .slider-container {
 }
 
 .slide-nav .nav-item.active {
-  color: #0077ff;
+  color: #002046;
   font-weight: bold;  border-left: none; /* 기존 선 없애기 */
   position: relative;
   padding-left: 80px; font-size: 18px;
 }
 
 .slide-nav .nav-item.active .dot {
-  background-color: #0077ff;
+  background-color: #002046;
 }
 
 .slide-nav .nav-item:hover {
-  background-color: transparent; color: #0077ff;
+  background-color: transparent; color: #002046;
 }
 .slider-container {
   position: relative;
@@ -865,27 +865,51 @@ body, html, #section2, .slider-container {
 #tab4 {
   max-width: 900px;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 60px 0;
   background: white;
   font-family: 'Noto Sans KR', sans-serif;
 }
 
 .history-wrapper {
   display: flex;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto; position: relative;
   padding: 30px; 
-  gap: 120px;
+  gap: 120px;   overflow: visible;
+}
+/* 문서 흐름 속 큰 년도 스타일 */
+.history-title {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto 40px auto; /* 가운데 정렬 + 아래 여백 */
 }
 
-.year-fixed {
-   position: fixed; 
-  top: 100px; /* 사용자가 보기 편한 위치로 조정 가능 */
-  left: 60px; right: 100px;
-  font-size: 2rem;
-  font-weight: bold;
+.history-title .text-year {
+  position: sticky;
+  top: 300px;  left: 200px; z-index: 999; margin-left: 200px;
+  font-size: 116px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(305deg, #0097F6 0%, #09DD8D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;  display: block; transition: opacity 0.3s ease;
+}
+
+.year-fixed {   
+  position:  fixed;  display: none; 
+  top: 300px; /* 사용자가 보기 편한 위치로 조정 가능 */
+  left: 200px;
+  font-size: 116px;
+  font-weight: 700; line-height: 1;
   z-index: 1000;
   padding: 10px;
+  background: linear-gradient(305deg, #0097F6 0%, #09DD8D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  pointer-events: none; /* 클릭 방지 */
+  user-select: none;
 }
 
 .history-list {
@@ -893,10 +917,10 @@ body, html, #section2, .slider-container {
 }
 
 .history-item {
-   min-height: 400px;
-  margin-bottom: 100px; /* 항목 간 간격 */
+   min-height: 400px; 
+  margin-bottom: 100px; margin-left: 280px;
   font-size: 1.1rem;
-  line-height: 2.5; color: #333;
+  line-height: 3; color: #333; 
 }
 
 
@@ -920,7 +944,7 @@ body, html, #section2, .slider-container {
 }
 
 .contact-info {
-  display: flex;
+  display: static;
   flex-direction: column;
   gap: 10px; /* 줄 간격 */
   font-size: 20px;
