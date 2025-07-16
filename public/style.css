@@ -801,11 +801,12 @@ body, html, #section2, .slider-container {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 100vh;
-  padding: 40px 10px;
+  min-width: auto;
+  min-height: auto;
+  padding: 40px 0;
   box-sizing: border-box;
   font-size: 2rem;
-  overflow-x: hidden;
+  overflow-x: auto;  overflow-y: visible;
 }
 #aboutsectionimg h2 {
   font-size: 3rem;
@@ -857,70 +858,61 @@ body, html, #section2, .slider-container {
   height: 450px;
 }
 #tab5 img{
-  width: 900px; margin-bottom: 30px;
+  width: 900px; margin-bottom: 30px; margin-top: 30px;
   height: 500px;
 }
 
 /*******************************************/
 #tab4 {
-  max-width: 900px;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 60px 0;
   background: white;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif; 
 }
 
 .history-wrapper {
-  display: flex;
-  max-width: 1200px;
-  margin: 0 auto; position: relative;
-  padding: 30px; 
-  gap: 120px;   overflow: visible;
-}
-/* 문서 흐름 속 큰 년도 스타일 */
-.history-title {
-  position: relative;
-  max-width: 900px;
-  margin: 0 auto 40px auto; /* 가운데 정렬 + 아래 여백 */
+  display: flex;  flex-direction: row; align-items: flex-start;
+  flex-wrap: nowrap; gap: 240px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0; overflow-x: visible; justify-content: space-between;
 }
 
-.history-title .text-year {
-  position: sticky;
-  top: 300px;  left: 200px; z-index: 999; margin-left: 200px;
-  font-size: 116px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  background: linear-gradient(305deg, #0097F6 0%, #09DD8D 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  user-select: none;  display: block; transition: opacity 0.3s ease;
-}
 
 .year-fixed {   
-  position:  fixed;  display: none; 
-  top: 300px; /* 사용자가 보기 편한 위치로 조정 가능 */
-  left: 200px;
-  font-size: 116px;
+  position:  relative;   flex: 0 0 200px; white-space: nowrap;
+  top: 120px; /* 사용자가 보기 편한 위치로 조정 가능 */
+  left: -50px;
+  font-size: 90px;
   font-weight: 700; line-height: 1;
   z-index: 1000;
-  padding: 10px;
   background: linear-gradient(305deg, #0097F6 0%, #09DD8D 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   pointer-events: none; /* 클릭 방지 */
   user-select: none;
+
+}
+.year-fixed.active {
+  opacity: 1;
 }
 
 .history-list {
-  flex: 1;
+  flex: 1; display: flex;
+  flex-direction: column;
 }
 
 .history-item {
-   min-height: 400px; 
-  margin-bottom: 100px; margin-left: 280px;
-  font-size: 1.1rem;
-  line-height: 3; color: #333; 
+   display: block;
+  min-height: 400px;
+  margin-bottom: 100px; 
+  font-size: 1.3rem;
+  line-height: 3;
+  color: #333;
+  white-space: nowrap;
+  overflow-x: visible;
+  text-overflow: clip;
 }
 
 

@@ -469,11 +469,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabContents = document.querySelectorAll('.tab-content');
   const yearFixed = document.getElementById('year-fixed');
   const historyWrapper = document.querySelector('.history-wrapper');
-  const textYear = document.querySelector('.history-title .text-year'); // 흐름 속 큰 년도
   const tab4 = document.getElementById('tab4');
   const historyItems = document.querySelectorAll('.history-item');
-
-  const fixedTriggerY = 100; // 고정 트리거 위치(px)
 
   let historyObserverInitialized = false;
 
@@ -501,61 +498,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 스크롤 이벤트 - 현재 가장 가까운 연혁 연도 업데이트
-   window.addEventListener('scroll', () => {
-  if (!yearFixed || !textYear || !historyWrapper) return;
-    const fixedTriggerY = 120;
-  const textYearRect = textYear.getBoundingClientRect();
+  // 스크롤 시 year-fixed 표시 여부 및 내용 업데이트
+ window.addEventListener('scroll', () => {
+  if (!yearFixed || !historyWrapper) return;
+
   const wrapperRect = historyWrapper.getBoundingClientRect();
 
+  const isWrapperVisible = (
+    wrapperRect.top < window.innerHeight &&
+    wrapperRect.bottom > 0
+  );
 
-  if (textYearRect.top <= fixedTriggerY && wrapperRect.bottom > fixedTriggerY) {
-    // 고정 텍스트 표시
-    yearFixed.style.display = 'block';
-    // yearFixed.style.position = 'fixed';
-    // yearFixed.style.top = fixedTriggerY + 'px';
-    // yearFixed.style.left = '20px';
+  if (isWrapperVisible) {
+    yearFixed.classList.add('active');
 
-
-    // text-year에 opacity 조절로 자연스러운 사라짐
-    textYear.style.opacity = '0';
-
-    // 가장 가까운 history-item 기준 년도 업데이트
+    // 현재 가장 가까운 history-item 연도 찾기
     let closestYear = '';
     let minDist = Infinity;
-    const viewportCenter = window.innerHeight / 2;
+    const centerY = window.innerHeight / 2;
 
     historyItems.forEach(item => {
       const rect = item.getBoundingClientRect();
-      const dist = Math.abs(rect.top - viewportCenter);
+      const dist = Math.abs(rect.top - centerY);
       if (rect.top <= window.innerHeight && rect.bottom >= 0 && dist < minDist) {
         minDist = dist;
         closestYear = item.dataset.year;
       }
     });
 
-    if (closestYear) yearFixed.innerText = closestYear;
+    if (closestYear) {
+      yearFixed.innerText = closestYear;
+    }
 
   } else {
-    // 고정 텍스트 숨기기
-    yearFixed.style.display = 'none';
-
-    // text-year 보이게, opacity 부드럽게 변경
-    textYear.style.opacity = '1';
-
-    // 초기 큰 년도 세팅
-    if (historyItems.length > 0) {
-      textYear.innerText = historyItems[0].dataset.year;
-    }
+    yearFixed.classList.remove('active');
   }
 });
 
-  // 페이지 로딩 시 초기 세팅
-  if (historyItems.length > 0) {
-    textYear.innerText = historyItems[0].dataset.year;
-  }
-
-  // IntersectionObserver로 초기 동기화 (옵션)
+  // IntersectionObserver 초기 설정
   function initHistoryObserver() {
     const observerOptions = {
       root: null,
@@ -583,16 +563,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const currentYear = closest.dataset.year;
         yearFixed.textContent = currentYear;
-        if (textYear) {
-          textYear.textContent = currentYear;
-        }
       }
     }, observerOptions);
 
     historyItems.forEach(item => observer.observe(item));
   }
 
-  // 초기 로딩 시 tab4 활성화 상태에 따라 처리
+  // 초기 탭 상태 확인
   if (tab4.classList.contains('active')) {
     yearFixed.style.display = 'block';
     if (!historyObserverInitialized) {
@@ -603,4 +580,3 @@ document.addEventListener('DOMContentLoaded', () => {
     yearFixed.style.display = 'none';
   }
 });
-
