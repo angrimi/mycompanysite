@@ -530,7 +530,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const currentYear = closest.dataset.year;
-        yearFixed.textContent = currentYear;
+        yearFixed.textContent = currentYear; 
+        revealHistoryLinesForItem(closest);
       }
     }, observerOptions);
 
@@ -548,23 +549,15 @@ document.addEventListener('DOMContentLoaded', () => {
     yearFixed.style.display = 'none';
   }
 
-function revealHistoryLinesOnScroll() {
-  const lines = document.querySelectorAll('.history-line');
-  lines.forEach((line, index) => {
-    const rect = line.getBoundingClientRect();
-    const triggerY = window.innerHeight * 0.9;
 
-    if (rect.top < triggerY && !line.classList.contains('appear')) {
-      setTimeout(() => {
-        line.classList.add('appear');
-      }, index * 280);
-    }
+
+function revealHistoryLinesForItem(itemElement) {
+  const lines = itemElement.querySelectorAll('.history-line');
+  lines.forEach((line, index) => {
+    setTimeout(() => {
+      line.classList.add('appear');
+    }, index * 280); // 줄별로 순차적 등장
   });
 }
-
-// 연결 및 실행
-const scrollTarget = document.querySelector('.scroll-container') || window;
-scrollTarget.addEventListener('scroll', revealHistoryLinesOnScroll);
-revealHistoryLinesOnScroll();
 
 });
