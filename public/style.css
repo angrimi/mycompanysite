@@ -806,7 +806,7 @@ body, html, #section2, .slider-container {
   padding: 40px 0;
   box-sizing: border-box;
   font-size: 2rem;
-  overflow-x: auto;  overflow-y: visible;
+  overflow: visible;
 }
 #aboutsectionimg h2 {
   font-size: 3rem;
@@ -881,18 +881,27 @@ body, html, #section2, .slider-container {
 
 
 .year-fixed {   
-  position:  relative;   flex: 0 0 200px; white-space: nowrap;
-  top: 120px; /* 사용자가 보기 편한 위치로 조정 가능 */
+  position: sticky !important;    
+  top: 150px; /* 사용자가 보기 편한 위치로 조정 가능 */
   left: -50px;
+  align-self: flex-start;
+  flex: 0 0 200px;
+  white-space: nowrap;
   font-size: 90px;
   font-weight: 700; line-height: 1;
   z-index: 1000;
-  background: linear-gradient(305deg, #0097F6 0%, #09DD8D 100%);
+  background: linear-gradient(305deg, #ec7200 0%, #ffa600 50%, #fff235 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   pointer-events: none; /* 클릭 방지 */
   user-select: none;
 
+}
+.year-fixed.active {
+  position: fixed;
+  top: 150px;   /* 화면 상단 위치 */
+  left: -50px;  /* 화면 좌측 위치(혹은 원하는 px) */
+  z-index: 1000;
 }
 .year-fixed.active {
   opacity: 1;

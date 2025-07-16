@@ -465,12 +465,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
 /////////////////////////////////about.html 탭, 통합 Observer/////////////////////////////////////////
 document.addEventListener('DOMContentLoaded', () => {
+  const scroller         = document.querySelector('.scroll-container');
   const tabButtons = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
+
   const yearFixed = document.getElementById('year-fixed');
   const historyWrapper = document.querySelector('.history-wrapper');
-  const tab4 = document.getElementById('tab4');
   const historyItems = document.querySelectorAll('.history-item');
+
+  const tab4 = document.getElementById('tab4');
+  
 
   let historyObserverInitialized = false;
 
@@ -498,42 +502,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 스크롤 시 year-fixed 표시 여부 및 내용 업데이트
- window.addEventListener('scroll', () => {
-  if (!yearFixed || !historyWrapper) return;
-
-  const wrapperRect = historyWrapper.getBoundingClientRect();
-
-  const isWrapperVisible = (
-    wrapperRect.top < window.innerHeight &&
-    wrapperRect.bottom > 0
-  );
-
-  if (isWrapperVisible) {
-    yearFixed.classList.add('active');
-
-    // 현재 가장 가까운 history-item 연도 찾기
-    let closestYear = '';
-    let minDist = Infinity;
-    const centerY = window.innerHeight / 2;
-
-    historyItems.forEach(item => {
-      const rect = item.getBoundingClientRect();
-      const dist = Math.abs(rect.top - centerY);
-      if (rect.top <= window.innerHeight && rect.bottom >= 0 && dist < minDist) {
-        minDist = dist;
-        closestYear = item.dataset.year;
-      }
-    });
-
-    if (closestYear) {
-      yearFixed.innerText = closestYear;
-    }
-
-  } else {
-    yearFixed.classList.remove('active');
-  }
-});
 
   // IntersectionObserver 초기 설정
   function initHistoryObserver() {
