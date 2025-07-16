@@ -547,4 +547,24 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     yearFixed.style.display = 'none';
   }
+
+function revealHistoryLinesOnScroll() {
+  const lines = document.querySelectorAll('.history-line');
+  lines.forEach((line, index) => {
+    const rect = line.getBoundingClientRect();
+    const triggerY = window.innerHeight * 0.9;
+
+    if (rect.top < triggerY && !line.classList.contains('appear')) {
+      setTimeout(() => {
+        line.classList.add('appear');
+      }, index * 280);
+    }
+  });
+}
+
+// 연결 및 실행
+const scrollTarget = document.querySelector('.scroll-container') || window;
+scrollTarget.addEventListener('scroll', revealHistoryLinesOnScroll);
+revealHistoryLinesOnScroll();
+
 });

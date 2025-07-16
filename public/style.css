@@ -870,7 +870,9 @@ body, html, #section2, .slider-container {
   padding: 60px 0;
   background: white;
   font-family: 'Noto Sans KR', sans-serif;  z-index: 0; 
+  
 }
+
 
 .history-wrapper {
   display: flex;  flex-direction: row; align-items: flex-start; overflow: visible; position: relative;
@@ -880,7 +882,6 @@ body, html, #section2, .slider-container {
   margin: 0; justify-content: space-between;
 }
 
-
 .year-fixed {   
   position: sticky !important;    
   top: 150px; /* 사용자가 보기 편한 위치로 조정 가능 */
@@ -888,7 +889,7 @@ body, html, #section2, .slider-container {
   align-self: flex-start;
   flex: 0 0 200px;
   white-space: nowrap;
-  font-size: 100px;
+  font-size: 116px;
   font-weight: 700; line-height: 1;
   z-index: 1000;
   background: linear-gradient(305deg, #ec7200 0%, #ffa600 50%, #fff235 100%);
@@ -917,12 +918,28 @@ body, html, #section2, .slider-container {
    display: block;
   min-height: 400px;
   margin-bottom: 100px; 
-  font-size: 1.3rem;
+  font-size: 1.3rem; font-weight: 400;
   line-height: 3;
   color: #333;
   white-space: nowrap;
   overflow-x: visible;
   text-overflow: clip;
+}
+
+.history-line {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.2s ease, transform 0.3s ease;
+  font-size: 1.3rem;
+  line-height: 2.3;
+  color: #333;
+  padding: 8px 12px;
+
+}
+
+.history-line.appear {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 
