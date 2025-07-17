@@ -350,36 +350,18 @@ body, html {
    overflow: hidden;
   position: relative;
   max-width: 1200px;
-  margin: auto;
-  padding: 0;
+  margin: auto; display: flex;  flex-direction: column;
+  padding: 0; align-items: center;
 }
 .slides-wrapper {
   display: flex;     /* 가로 배열 */
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);/* 부드러운 이동 */  padding: 0 80px; box-sizing: content-box;
-  width: max-content; transform: translateX(0); overflow: visible;
-}
-.slide2 {
-  display: flex;      flex: 0 0 800px; transform: translateY(0); overflow-y: hidden;
-  margin: 0; justify-content: flex-start;
-  box-sizing: border-box;
-  flex-direction: column;
-  align-items: center; justify-content: center;
-  transition: opacity 1s ease-in-out; transition: transform 0.7s ease-in-out; 
-  text-align: left;    /* 텍스트 기본은 왼쪽 정렬 */ 
- 
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);/* 부드러운 이동 */  padding: 0; box-sizing: content-box;
+  width: max-content; transform: translateX(0); overflow: hidden;
 }
 
-.slide2 img {
-  width: 90%;
-  height: 400px;
-  display: block; 
-  margin: 0 auto; margin-bottom: 40px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-#section2 h1 {
-  margin-bottom: 60px; margin-top: 20px; line-height: 1.4;
-  font-size: 1.7rem; text-align: center; 
-}
+.slide2 { display: flex; flex: 0 0 800px; transform: translateY(0); overflow-y: hidden; margin: 0; justify-content: flex-start; box-sizing: border-box; flex-direction: column; align-items: center; justify-content: center; transition: opacity 1s ease-in-out; transition: transform 0.7s ease-in-out; text-align: left; /* 텍스트 기본은 왼쪽 정렬 */ } 
+.slide2 img { width: 90%; height: 400px; display: block; margin: 0 auto; margin-bottom: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); } 
+#section2 h1 { max-width: 800px; margin: 20px auto 60px auto; line-height: 1.4; font-size: 1.7rem; text-align: center; }
 
 .slide2-text {
   display: flex; min-height: 80px;
@@ -432,83 +414,264 @@ body, html, #section2, .slider-container {
   overflow-x: hidden;
 }
 
-.slide-nav {
-  position: sticky;
-  top: 120px;
-  width: 300px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+body {
+  overflow-x: hidden;
   box-sizing: border-box;
 }
 
+.slide-nav {
+  position: sticky;
+  top: 350px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 80px;
+  z-index: 10;
+}
+
 .slide-nav .nav-item {
-  position: relative;
-  padding-left: 80px;
-  font-size: 14px; font-family: 'gmaketmedium'; 
-  color: #bababa;  line-height: 2; font-weight: bold;
-  transition: color 0.3s ease, font-weight 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  font-size: 0;           /* 글자 영향 제거 */
+  overflow: visible; 
+  cursor: pointer;
 }
 
 .slide-nav .nav-item .dot {
-  position: absolute;
-  left: 65px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background-color: transparent;
-  transition: background-color 0.3s ease;
-}
-
-.slide-nav .nav-item.active {
-  color: #002046;
-  font-weight: bold;  border-left: none; /* 기존 선 없애기 */
-  position: relative;
-  padding-left: 80px; font-size: 18px;
+  background-color: #c9c9c9;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .slide-nav .nav-item.active .dot {
   background-color: #002046;
+  transform: scale(1.3);
 }
 
-.slide-nav .nav-item:hover {
-  background-color: transparent; color: #002046;
+.slide-nav .nav-item:hover .dot {
+  transform: scale(1.2);
 }
+
 .slider-container {
   position: relative;
-  width: 80%;
-  margin-left: 100px;  min-height: 400px;
-  overflow: hidden;
+  max-width: 100vw;
+  margin-left: 80px;
+  min-height: 400px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+/*********************************************************section3**********************************************************************/
+/* 섹션 스타일 */
+#section3 {
+  padding: 20px 0; /* 위아래 패딩 늘림 */
+  background-color: #f9f9f9;
+  font-family: 'Noto Sans KR', sans-serif;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box; 
+}
+.section-title {
+  text-align: center;
+  font-size: 2.4rem;
+  margin-bottom: 40px;
+  font-weight: 700;
 }
 
-.prev-btn, .next-btn {
+/* 그리드 레이아웃 */
+.grid-container {
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-auto-rows: minmax(160px, auto);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto; /* 가운데 정렬 */
+  padding: 0 20px; 
+}
+
+/* 공통 카드 스타일 */
+.card {
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-direction: column;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+/* 개별 카드 스타일 */
+.card.ai {
+  background: linear-gradient(135deg, #1e90ff, #0077ff);
+   grid-column: 1; grid-row: 1 / span 2;
+   display: flex;               /* 내부 요소 배치용 */
+  flex-direction: column;      /* 세로로 쌓기 */
+  align-items: center;         /* 수평 중앙 정렬 */
+  justify-content: center;     /* 수직 중앙 정렬 */
+  text-align: center;          /* 텍스트 중앙 정렬 */
+  padding: 20px;
+  color: #fff;
+}
+.card.ai img{
+  width: 120px;
+  height: 120px;
+  object-fit: contain; margin-bottom: 10px; 
+}
+.card.ai h3 {
+  margin: 0 0 10px;
+  font-size: 2.2rem;
+}
+.card.ai p {
+  margin: 0; word-break: keep-all;
+  font-size: 1.4rem; text-align: left; margin-left: 10px;
+}
+.card.iot {
+  background: #001f3f; grid-column:  2 / span 2; grid-row: 1 / span 1; 
+   display: flex;
+  flex-direction: row;
+   align-items: center;
+  justify-content: space-between;
+  padding: 20px; gap: 20px; 
+  background: #001f3f;
+  color: #fff;
+}
+.card.iot img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 10px; margin-left: 20px;
+  margin-right: 20px; 
+}
+.card-text {
+  flex: 1;  display: flex;   flex-direction: column;     /* 텍스트 세로로 쌓기 */
+  gap: 5px;
+}
+
+.card-text h3 {
+  margin: 0 0 10px;
+  font-size: 2.2rem;
+}
+
+.card-text p {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.card.energy {
+  background: url('images/energy.jpg') center/cover no-repeat; grid-column: 4 / span 1; grid-row: 1 / span 2;
+  position: relative; 
+  color: #fff;overflow: hidden;
+}
+.card.energy::after {
+  content: '';
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
-  font-size: 2rem;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;  /* 아래 절반에만 덮이도록 */
+  background: linear-gradient(to top, rgba(0, 0, 128, 1), rgba(0, 0, 128, 0));
+  pointer-events: none;  z-index: 1;
+}
+.card.metaverse {
+  background: linear-gradient(130deg, #8a68fa, #7045ff, #2d0292, #0a0368); 
+   grid-column: 1 / span 1; grid-row: 3 / span 2;
+}
+.card.data {
+  background: #001a2e;
+  grid-column: 2 / span 2; grid-row: 4 / span 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px; gap: 20px; 
+  background: #001f3f;
+  color: #fff;
+}
+.card.data img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 10px; margin-left: 20px;
+  margin-right: 20px;
+}
+.card.cloud {
+  background: linear-gradient(130deg, #8a68fa, #7045ff, #2d0292, #0a0368); 
+   grid-column: 4 / span 1; grid-row: 3/ span 2;
+}
+.card.ar1,
+.card.ar2,
+.card.vr1,
+.card.vr2 {
+  background: #f4f4f4;
+  color: #000;
+   display: flex;               /* 내부 요소 배치용 */
+  flex-direction: column;      /* 세로로 쌓기 */
+  align-items: center;         /* 수평 중앙 정렬 */
+  justify-content: center;     /* 수직 중앙 정렬 */
+  text-align: center;          /* 텍스트 중앙 정렬 */
+  padding: 20px; font-weight: 400;
+}
+.card.ar1 h3,
+.card.ar2 h3,
+.card.vr1 h3,
+.card.vr2 h3 {
+  margin-top: 7px; margin-bottom: 10px;
+  font-size: 1.7rem;
+}
+.card.ar1 p,
+.card.ar2 p,
+.card.vr1 p,
+.card.vr2 p {
+  margin: 0; text-align: left; word-break: keep-all;
+  font-size: 1rem; color:#000; margin-left: 10px;
+}
+.card.ar1 {
+  grid-column: 2;
+  grid-row: 2;
 }
 
-.prev-btn:hover, .next-btn:hover {
-  background-color: #eee;
+.card.ar2 {
+  grid-column: 3;
+  grid-row: 2;
 }
 
-.prev-btn {
-  left: 10px;
+.card.vr1 {                                                      
+  grid-column: 2;
+  grid-row: 3;
 }
 
-.next-btn {
-  right: 10px;
+.card.vr2 {
+  grid-column: 3;
+  grid-row: 3;
 }
+/* 반응형 */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .card.data {
+    grid-column: span 1;
+  }
+
+  .card.ai {
+    grid-row: span 1;
+  }
+}
+
 
 /******************section0*************************/
 #section0 {
@@ -664,13 +827,13 @@ body, html, #section2, .slider-container {
   align-items: center;
   justify-content: center;
   position: relative;
-  z-index: 0;
+  z-index: 0; overflow-x: hidden;
 }
 
 .partner-logos-wrapper {
   width: 1200px;
   height: 150px;
-  overflow: hidden;
+  overflow: visible; 
   position: relative;
   flex-shrink: 0;
   margin: 0 auto;
@@ -770,7 +933,7 @@ body, html, #section2, .slider-container {
   margin: 50px auto;
   border-collapse: collapse;
   font-family: sans-serif;
-  position: relative;
+  position: relative; 
 }
 
 .tab-row {
@@ -799,8 +962,8 @@ body, html, #section2, .slider-container {
 .tab-content.active {
   display: flex;  /* block 대신 flex로 바꾸기 */
   flex-direction: column;
-  align-items: center;
   justify-content: flex-start;
+  align-items: center;
   min-width: auto;
   min-height: auto;
   padding: 40px 0;
@@ -809,7 +972,7 @@ body, html, #section2, .slider-container {
   overflow: visible;
 }
 #aboutsectionimg h2 {
-  font-size: 3rem;
+  font-size: 3rem; 
   z-index: 1;
   margin-bottom: 40px;
 }
@@ -831,11 +994,11 @@ body, html, #section2, .slider-container {
   width: 600px; margin-bottom: 30px; 
   height: 400px; 
 }
+
 #tab2 h3{
   font-size: 1.6rem;
   padding-bottom: 10px;
-  color:#000000;
-  text-align: left;
+  color:#000000; align-self: flex-start;  margin-left: 320px;
   font-family: 'kopubmediom', sans-serif; 
 }
 #tab2 p{
@@ -876,7 +1039,7 @@ body, html, #section2, .slider-container {
 
 .history-wrapper {
   display: flex;  flex-direction: row; align-items: flex-start; overflow: visible; position: relative;
-  flex-wrap: nowrap; gap: 240px;
+  flex-wrap: nowrap; gap: clamp(80px, 10vw, 180px);
   width: 100%;
   max-width: 1100px;
   margin: 0; justify-content: space-between;
@@ -885,14 +1048,14 @@ body, html, #section2, .slider-container {
 .year-fixed {   
   position: sticky !important;    
   top: 150px; /* 사용자가 보기 편한 위치로 조정 가능 */
-  left: -50px;
+
   align-self: flex-start;
   flex: 0 0 200px;
   white-space: nowrap;
   font-size: 116px;
   font-weight: 700; line-height: 1;
   z-index: 1000;
-  background: linear-gradient(305deg, #ec7200 0%, #ffa600 50%, #fff235 100%);
+  background: linear-gradient(305deg, #fc6500 0%, #ffa600 50%, #fff235 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   pointer-events: none; /* 클릭 방지 */
@@ -902,20 +1065,60 @@ body, html, #section2, .slider-container {
 .year-fixed.active {
   position: fixed;
   top: 150px;   /* 화면 상단 위치 */
-  left: -50px;  /* 화면 좌측 위치(혹은 원하는 px) */
+    /* 화면 좌측 위치(혹은 원하는 px) */
   z-index: 1000;
 }
 .year-fixed.active {
   opacity: 1;
 }
 
+
+
 .history-list {
   flex: 1; display: flex;
   flex-direction: column;
+   position: relative;
+}
+
+
+/* 선 추가 - 각 연도 그룹별로 끊어짐 */
+.history-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8px;
+  width: 5px;
+  height: 100%;
+  background-color: #ff5e00;
+  border-radius: 2px;
+}
+/* 🟠 윗쪽 원 */
+.history-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 4px;
+  width: 12px;
+  height: 12px;
+  background-color: #ff5e00;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* 🟠 아랫쪽 원 */
+.history-item .circle-end {
+  position: absolute;
+  bottom: 0;
+  left: 4px;
+  width: 12px;
+  height: 12px;
+  background-color: #ff5e00;
+  border-radius: 50%;
+  z-index: 1;
 }
 
 .history-item {
-   display: block;
+   display: block; position: relative; padding-left: 50px; /*선과 연혁 간격*/
   min-height: 400px;
   margin-bottom: 100px; 
   font-size: 1.3rem; font-weight: 400;
@@ -933,8 +1136,8 @@ body, html, #section2, .slider-container {
   font-size: 1.3rem;
   line-height: 2.3;
   color: #333;
-  padding: 8px 12px;
-
+  padding: 8px 12px; 
+  position: relative;
 }
 
 .history-line.appear {
