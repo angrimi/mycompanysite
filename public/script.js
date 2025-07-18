@@ -128,7 +128,7 @@ const projects = [
     끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다.끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
     고객과 사회에 실질적인 가치를 제공하는 지속 가능한 IT 파트너로서의 비전을 실현해가고 있습니다.`,
     mediaType: "video",
-    mediaSrc: "images/project1.mp4"
+    mediaSrc: "images/project11.mp4"
   },
   {
     title: "스마트 에너지 플랫폼",
