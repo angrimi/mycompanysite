@@ -119,91 +119,88 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   //////////////////////section2////////////////////
-// JS: 무한 루프 & 피크 효과 & 텍스트 동기화 전체코드
-document.addEventListener("DOMContentLoaded", () => {
-  const wrapper = document.querySelector(".slides-wrapper");
-  const navItems = document.querySelectorAll(".nav-item");
-  const originalSlides = Array.from(document.querySelectorAll(".slide2"));
-  const slideWidth = 800;
-  const peek = 80;
+const projects = [
+  {
+    title: "IT Project",
+    subtitleTop: "기술 융합 플랫폼",
+    subtitleBottom: "#AI API    #메타버스   #에너지 프로젝트    #AR 가술",
+    description: `레몬소프트의 IT 전문 기술은 AI, 메타버스, 에너지 솔루션, 증강현실 등 다양한 첨단 기술을 융합하여 사용자의 삶을 더 편리하고 스마트하게 만들어갑니다. 
+    끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다.끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
+    고객과 사회에 실질적인 가치를 제공하는 지속 가능한 IT 파트너로서의 비전을 실현해가고 있습니다.`,
+    mediaType: "video",
+    mediaSrc: "images/project1.mp4"
+  },
+  {
+    title: "스마트 에너지 플랫폼",
+    subtitleTop: "기술 융합 플랫폼",
+    subtitleBottom: "#AI   #메타버스  #에너지  #AR",
+    description: `레몬소프트의 IT 전문 기술은 AI, 메타버스, 에너지 솔루션, 증강현실 등 다양한 첨단 기술을 융합하여 사용자의 삶을 더 편리하고 스마트하게 만들어갑니다. 
+    끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다.끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
+    고객과 사회에 실질적인 가치를 제공하는 지속 가능한 IT 파트너로서의 비전을 실현해가고 있습니다.`,
+    mediaType: "image",
+    mediaSrc: "images/project2.png"
+  },
+  {
+    title: "VR 산업교육 시스템",
+    subtitleTop: "기술 융합 플랫폼",
+    subtitleBottom: "#AI   #메타버스   #에너지   #AR",
+    description: `레몬소프트의 IT 전문 기술은 AI, 메타버스, 에너지 솔루션, 증강현실 등 다양한 첨단 기술을 융합하여 사용자의 삶을 더 편리하고 스마트하게 만들어갑니다. 
+    끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다.끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
+    고객과 사회에 실질적인 가치를 제공하는 지속 가능한 IT 파트너로서의 비전을 실현해가고 있습니다.`,
+    mediaType: "video",
+    mediaSrc: "images/project1.mp4"
+  }
+];
 
-  // ✅ 슬라이드 복제 (무한 루프용)
-  const firstClone = originalSlides[0].cloneNode(true);
-  const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true);
-  wrapper.insertBefore(lastClone, originalSlides[0]);
-  wrapper.appendChild(firstClone);
+let current = 0;
 
-  const allSlides = document.querySelectorAll(".slide2");
-  let currentIndex = 1;
+const leftBtn = document.querySelector(".left-arrow");
+const rightBtn = document.querySelector(".right-arrow");
+const desc = document.querySelector(".project-description");
+const media = document.querySelector(".project-media");
+const contentWrapper = document.querySelector(".project-content");
 
-  const moveTo = (index, transition = true) => {
-    wrapper.style.transition = transition
-      ? "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)"
-      : "none";
-    const moveX = index * slideWidth - peek;
-    wrapper.style.transform = `translateX(-${moveX}px)`;
-    currentIndex = index;
-  };
+function updateProject(index) {
+  const p = projects[index];
 
-  const updateUI = () => {
-    const realIndex = (currentIndex - 1 + originalSlides.length) % originalSlides.length;
+  // 텍스트 & 미디어 각각 fade-out
+  desc.classList.add("fade-out");
+  media.classList.add("fade-out");
 
-    navItems.forEach((nav, i) => nav.classList.toggle("active", i === realIndex));
+  setTimeout(() => {
+    // 텍스트 내용 변경
+    desc.innerHTML = `
+      <small class="subtitle-top">${p.subtitleTop}</small>
+      <h3>${p.title}</h3>
+      <h4 class="subtitle-bottom">${p.subtitleBottom}</h4>
+      <p>${p.description}</p>
+    `;
 
-    originalSlides.forEach((slide, i) => {
-      const text = slide.querySelector(".slide2-text");
-      if (text) {
-        if (i === realIndex) {
-          text.classList.remove("hidden");
-        } else {
-          text.classList.add("hidden");
-        }
-      }
-    });
-  };
-
-  // ✅ 트랜지션 끝나면 위치 리셋
-  wrapper.addEventListener("transitionend", () => {
-    if (currentIndex === 0) {
-      moveTo(originalSlides.length, false);
-      updateUI();
-    } else if (currentIndex === originalSlides.length + 1) {
-      moveTo(1, false);
-      updateUI();
+    // 미디어 변경
+    if (p.mediaType === "video") {
+      media.innerHTML = `<video src="${p.mediaSrc}" controls></video>`;
+    } else if (p.mediaType === "image") {
+      media.innerHTML = `<img src="${p.mediaSrc}" alt="${p.title} 이미지">`;
     }
-  });
 
-  // ✅ nav 클릭 시
-  navItems.forEach((nav, i) => {
-    nav.addEventListener("click", () => {
-      moveTo(i + 1);
-      updateUI();
-      resetAuto();
-    });
-  });
+    // fade-in 효과 적용
+    desc.classList.remove("fade-out");
+    media.classList.remove("fade-out");
+  }, 300); // 타이밍 조절 (CSS transition과 일치)
+}
 
-  const next = () => {
-    let nextIndex = currentIndex + 1;
-
-    moveTo(nextIndex);
-
-    if (nextIndex !== originalSlides.length + 1) {
-      updateUI();
-    }
-  };
-
-  let auto = setInterval(next, 4000);
-  const resetAuto = () => {
-    clearInterval(auto);
-    auto = setInterval(next, 4000);
-  };
-
-  // ✅ 초기 세팅
-  moveTo(1, false);
-  updateUI();
+leftBtn.addEventListener("click", () => {
+  current = (current - 1 + projects.length) % projects.length;
+  updateProject(current);
 });
 
+rightBtn.addEventListener("click", () => {
+  current = (current + 1) % projects.length;
+  updateProject(current);
+});
 
+// 초기화
+updateProject(current);
 
 document.addEventListener("DOMContentLoaded", () => {
   ///////////////////////////////////////////////////////////////////// 네비바 로딩 및 이벤트 바인딩
@@ -248,89 +245,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     
-
-    /* ===== ▼▼▼ 하단 메뉴 드롭다운 기능 전체 비활성화 ▼▼▼ ===== */
-
-    /*
-    const dropdowns = document.querySelectorAll('.dropdown');
-    let currentPanel = null;   // 현재 열려 있는 하단 메뉴 (.dropdown-panel)
-    let hideTimeout = null;    // 하단 메뉴 닫기 타이머
-
-    function showPanel(panel) {
-      if (hideTimeout) {
-        clearTimeout(hideTimeout);
-        hideTimeout = null;
-      }
-
-      if (currentPanel && currentPanel !== panel) {
-        currentPanel.style.opacity = '0';
-        currentPanel.style.visibility = 'hidden';
-        currentPanel.style.pointerEvents = 'none';
-        currentPanel.parentElement.classList.remove('active');
-      }
-
-      panel.style.display = 'flex';
-      requestAnimationFrame(() => {
-        panel.style.opacity = '1';
-        panel.style.visibility = 'visible';
-        panel.style.pointerEvents = 'auto';
-      });
-
-      panel.parentElement.classList.add('active');
-      currentPanel = panel;
-    }
-
-    function hidePanel(panel) {
-      panel.style.opacity = '0';
-      panel.style.visibility = 'hidden';
-      panel.style.pointerEvents = 'none';
-      panel.style.display = 'none';
-
-      if (currentPanel === panel) currentPanel = null;
-
-      if (hideTimeout) {
-        clearTimeout(hideTimeout);
-        hideTimeout = null;
-      }
-
-      panel.parentElement.classList.remove('active');
-    }
-
-    dropdowns.forEach(dropdown => {
-      const panel = dropdown.querySelector('.dropdown-panel');
-      if (!panel) return;
-
-      dropdown.addEventListener('mouseenter', () => {
-        showPanel(panel);
-      });
-
-      dropdown.addEventListener('mouseleave', () => {
-        hideTimeout = setTimeout(() => {
-          if (!panel.matches(':hover')) {
-            hidePanel(panel);
-          }
-        }, 100);
-      });
-
-      panel.addEventListener('mouseenter', () => {
-        if (hideTimeout) {
-          clearTimeout(hideTimeout);
-          hideTimeout = null;
-        }
-        showPanel(panel);
-      });
-
-      panel.addEventListener('mouseleave', () => {
-        hideTimeout = setTimeout(() => {
-          hidePanel(panel);
-        }, 100);
-      });
-    });
-    */
-
-    /* ===== ▲▲▲ 하단 메뉴 드롭다운 기능 전체 비활성화 ▲▲▲ ===== */
-  
-
 
     
     // ✅ 기존 스크롤 처리 로직 이어붙이기
