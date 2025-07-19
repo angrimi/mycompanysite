@@ -121,11 +121,11 @@ document.addEventListener("DOMContentLoaded", function () {
   //////////////////////section2////////////////////
 const projects = [
   {
-    title: "IT Project",
+    title: "AI 기반 분석 프로젝트",
     subtitleTop: "기술 융합 플랫폼",
     subtitleBottom: "#AI API    #메타버스   #에너지 프로젝트    #AR 가술",
     description: `레몬소프트의 IT 전문 기술은 AI, 메타버스, 에너지 솔루션, 증강현실 등 다양한 첨단 기술을 융합하여 사용자의 삶을 더 편리하고 스마트하게 만들어갑니다. 
-    끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다.끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
+    끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다. 끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
     고객과 사회에 실질적인 가치를 제공하는 지속 가능한 IT 파트너로서의 비전을 실현해가고 있습니다.`,
     mediaType: "video",
     mediaSrc: "images/project11.mp4"
@@ -135,7 +135,7 @@ const projects = [
     subtitleTop: "기술 융합 플랫폼",
     subtitleBottom: "#AI   #메타버스  #에너지  #AR",
     description: `레몬소프트의 IT 전문 기술은 AI, 메타버스, 에너지 솔루션, 증강현실 등 다양한 첨단 기술을 융합하여 사용자의 삶을 더 편리하고 스마트하게 만들어갑니다. 
-    끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다.끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
+    끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다. 끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
     고객과 사회에 실질적인 가치를 제공하는 지속 가능한 IT 파트너로서의 비전을 실현해가고 있습니다.`,
     mediaType: "image",
     mediaSrc: "images/project2.png"
@@ -145,62 +145,59 @@ const projects = [
     subtitleTop: "기술 융합 플랫폼",
     subtitleBottom: "#AI   #메타버스   #에너지   #AR",
     description: `레몬소프트의 IT 전문 기술은 AI, 메타버스, 에너지 솔루션, 증강현실 등 다양한 첨단 기술을 융합하여 사용자의 삶을 더 편리하고 스마트하게 만들어갑니다. 
-    끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다.끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
+    끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다. 끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
     고객과 사회에 실질적인 가치를 제공하는 지속 가능한 IT 파트너로서의 비전을 실현해가고 있습니다.`,
     mediaType: "video",
     mediaSrc: "images/project1.mp4"
   }
 ];
 
-let current = 0;
-
+// ✅ 이 조건문으로 index.html에서만 작동하도록 제한
 const leftBtn = document.querySelector(".left-arrow");
 const rightBtn = document.querySelector(".right-arrow");
 const desc = document.querySelector(".project-description");
 const media = document.querySelector(".project-media");
-const contentWrapper = document.querySelector(".project-content");
 
-function updateProject(index) {
-  const p = projects[index];
+if (leftBtn && rightBtn && desc && media) {
+  let current = 0;
 
-  // 텍스트 & 미디어 각각 fade-out
-  desc.classList.add("fade-out");
-  media.classList.add("fade-out");
+  function updateProject(index) {
+    const p = projects[index];
 
-  setTimeout(() => {
-    // 텍스트 내용 변경
-    desc.innerHTML = `
-      <small class="subtitle-top">${p.subtitleTop}</small>
-      <h3>${p.title}</h3>
-      <h4 class="subtitle-bottom">${p.subtitleBottom}</h4>
-      <p>${p.description}</p>
-    `;
+    desc.classList.add("fade-out");
+    media.classList.add("fade-out");
 
-    // 미디어 변경
-    if (p.mediaType === "video") {
-      media.innerHTML = `<video src="${p.mediaSrc}" controls></video>`;
-    } else if (p.mediaType === "image") {
-      media.innerHTML = `<img src="${p.mediaSrc}" alt="${p.title} 이미지">`;
-    }
+    setTimeout(() => {
+      desc.innerHTML = `
+        <small class="subtitle-top">${p.subtitleTop}</small>
+        <h3>${p.title}</h3>
+        <h4 class="subtitle-bottom">${p.subtitleBottom}</h4>
+        <p>${p.description}</p>
+      `;
 
-    // fade-in 효과 적용
-    desc.classList.remove("fade-out");
-    media.classList.remove("fade-out");
-  }, 300); // 타이밍 조절 (CSS transition과 일치)
+      if (p.mediaType === "video") {
+        media.innerHTML = `<video src="${p.mediaSrc}" controls></video>`;
+      } else if (p.mediaType === "image") {
+        media.innerHTML = `<img src="${p.mediaSrc}" alt="${p.title} 이미지">`;
+      }
+
+      desc.classList.remove("fade-out");
+      media.classList.remove("fade-out");
+    }, 300);
+  }
+
+  leftBtn.addEventListener("click", () => {
+    current = (current - 1 + projects.length) % projects.length;
+    updateProject(current);
+  });
+
+  rightBtn.addEventListener("click", () => {
+    current = (current + 1) % projects.length;
+    updateProject(current);
+  });
+
+  updateProject(current);
 }
-
-leftBtn.addEventListener("click", () => {
-  current = (current - 1 + projects.length) % projects.length;
-  updateProject(current);
-});
-
-rightBtn.addEventListener("click", () => {
-  current = (current + 1) % projects.length;
-  updateProject(current);
-});
-
-// 초기화
-updateProject(current);
 
 document.addEventListener("DOMContentLoaded", () => {
   ///////////////////////////////////////////////////////////////////// 네비바 로딩 및 이벤트 바인딩
