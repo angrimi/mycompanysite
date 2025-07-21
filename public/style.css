@@ -1469,25 +1469,31 @@ hr.contact-line {
 }
 
 /***************************business.html*******************************************************/
+
+
 #businesssectionimg {
-  position: relative;
   width: 100%;
   height: 500px;
-  overflow: hidden;
+  background-image: url("images/businesssectionimg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative; /* h2 위치 조절용 */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
+  color: white; animation: zoomIn 5s ease-in-out forwards; overflow-x: hidden;
 }
 
-#businesssectionimg video {
+/*#businesssectionimg video {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 200px;
-  object-fit: cover;  /* 비디오를 꽉 차게 */
+  object-fit: cover; 
   z-index: 0;
-}
+}*/
 
 
 .section-title {
@@ -1558,7 +1564,9 @@ hr.contact-line {
 }
 
 .SI-box {
-  min-width: 1000px;
+  flex: 1; 
+  min-width: 800px; /* 가로 제한 */
+  width: 100%;
   margin: 0 auto;
   padding: 40px;
   display: flex;
@@ -1580,7 +1588,7 @@ hr.contact-line {
 
 .SI-text {
   flex: 1; 
-  min-width: 280px;
+  
 }
 .SI-text p {
   flex: 1; 
@@ -1595,18 +1603,18 @@ hr.contact-line {
 }
 
 .description {  
-  font-size: 1.1rem; text-align: left; word-break: keep-all;
+  font-size: 1.3rem; text-align: left; word-break: keep-all;
   margin: 30px 0;
   line-height: 1.6;
 }
 .feature-list-grid {  
-  display: flex; text-align: left; word-break: keep-all;
-  gap: 60px;
+  display: flex; text-align: left; word-break: keep-all; 
+  gap: 60px; line-height: 1.6; font-size: 1.2rem;
   flex-wrap: wrap;
 }
 
 .feature-column {
-  list-style: none;
+  list-style: none; line-height: 1.6;
   padding: 0;
   flex: 1;
   min-width: 220px;
@@ -1614,12 +1622,12 @@ hr.contact-line {
 
 .feature-list {
   list-style: none; text-align: left; word-break: keep-all;
-  padding: 0;  line-height: 1.6;
-  font-size: 1rem;
+  padding: 0;  line-height: 1.6; 
+  font-size: 1.2rem;
 }
 
 .feature-list li {
-  margin-bottom: 10px;
+  margin-bottom: 10px;   font-size: 1.2rem;
 }
 .section-content2 {
   display: flex;

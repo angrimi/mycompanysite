@@ -472,4 +472,3 @@ function revealHistoryLinesForItem(itemElement) {
 }
 
 });
-
