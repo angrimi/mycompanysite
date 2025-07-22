@@ -1,51 +1,36 @@
 window.addEventListener("DOMContentLoaded", () => {
   const slides = document.querySelectorAll('.slide');
   const texts = [
-    {
-      title: "레몬소프트와 시작하세요.",
-      desc: "첫 번째 영상에 맞는 문구"
-    },
-    {
-      title: "미래를 만나는 메타버스",
-      desc: "두 번째 영상에 맞는 문구"
-    },
-    {
-      title: "AI와 손잡고 나아가다",
-      desc: "세 번째 영상에 맞는 문구"
-    }
+    {desc: "사람과 기술이 함께 만드는 내일", title: "사람과 함께 진화하는 AI" },
+    {desc: "모든 연결의 중심, 모든 혁신의 시작", title: "클라우드로 연결된 새로운 세상" },
+    {desc: "에너지를 읽고, 미래를 예측하는 기술" , title: "데이터가 움직이는 에너지의 미래"},
   ];
 
   const titleEl = document.querySelector('.slide-text h1');
   const descEls = document.querySelectorAll('.slide-text p');
-  const dots = document.querySelectorAll('.slide-dot');
+  const dots = document.querySelectorAll('.slide-dot'); const slideText = document.querySelector('.slide-text');
 
   let current = 0;
 
   function showSlide(index) {
-    slides.forEach((video, i) => {
-      video.classList.toggle('active', i === index);
-      video.pause();
-      video.currentTime = 0;
+    slides.forEach((img, i) => {
+      img.classList.toggle('active', i === index);
     });
 
-    slides[index].play();
     titleEl.textContent = texts[index].title;
     if (descEls.length > 1) {
       descEls[1].textContent = texts[index].desc;
     } else if (descEls.length > 0) {
       descEls[0].textContent = texts[index].desc;
     }
+
     dots.forEach((dot, i) => {
       dot.classList.toggle('active', i === index);
     });
+      slideText.classList.remove('active');      // 기존 active 제거
+      void slideText.offsetWidth;                 // 리플로우 강제 발생 (애니메이션 초기화)
+      slideText.classList.add('active');         // active 다시 붙이기 (애니메이션 재시작)
   }
-
-  slides.forEach((video, i) => {
-    video.addEventListener('ended', () => {
-      current = (i + 1) % slides.length;
-      showSlide(current);
-    });
-  });
 
   dots.forEach((dot, i) => {
     dot.addEventListener('click', () => {
@@ -53,9 +38,14 @@ window.addEventListener("DOMContentLoaded", () => {
       showSlide(current);
     });
   });
+  setInterval(() => {
+  current = (current + 1) % slides.length;
+  showSlide(current);
+}, 5000); // 5초마다 전환
 
   showSlide(current);
 });
+
 
 //스크롤
 const container = document.querySelector('.scroll-container');
@@ -97,8 +87,9 @@ container.addEventListener('wheel', (e) => {
     }
   }
 });
+
 //////////////////////section0////////////////////
-document.addEventListener("DOMContentLoaded", function () {
+/*document.addEventListener("DOMContentLoaded", function () {
     const text = "레몬소프트의 기술을 소개합니다";
     const target = document.getElementById("typing-text");
 
@@ -112,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     typing();
-  });
+  });*/
   //////////////////////section0->section2////////////////////
   
 
@@ -386,6 +377,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const tab4 = document.getElementById('tab4');
   
+  const locationTabs = document.querySelectorAll('.tab-titles li');
+  const locationContents = document.querySelectorAll('.tab-page');
+  let isHeadquartersMapRendered = false;
+
 
   let historyObserverInitialized = false;
 
@@ -469,6 +464,44 @@ function revealHistoryLinesForItem(itemElement) {
       line.classList.add('appear');
     }, index * 280); // 줄별로 순차적 등장
   });
+  
 }
+ 
 
+});
+ document.addEventListener('DOMContentLoaded', () => {
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  let isLocationMapRendered = false;
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-tab');
+
+      // 탭 콘텐츠 토글 (기존 코드)
+      tabButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.tab-content')
+        .forEach(tab => tab.classList.remove('active'));
+      document.getElementById(targetId).classList.add('active');
+
+      // 탭6(오시는 길) 클릭 시 지도 렌더링
+      if (targetId === 'tab6' && !isLocationMapRendered) {
+        new daum.roughmap.Lander({
+          timestamp: "1753150882253",
+          key: "62v9fb9ymb7",
+          mapWidth: "700",
+          mapHeight: "360"
+        }).render();
+        new daum.roughmap.Lander({
+        "timestamp" : "1753157246325",
+        "key" : "t8u8t4hfjae",
+        "mapWidth" : "700",
+        "mapHeight" : "360"
+      }).render();
+
+        isLocationMapRendered = true;
+      }
+    });
+  });
 });

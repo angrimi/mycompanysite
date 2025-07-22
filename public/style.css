@@ -286,40 +286,53 @@ body, html {
   height: 100vh;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+ transform: scale(1); /* 기본 크기 */
+  transition: 
+    opacity 1s ease-in-out,
+    transform 5s ease-in-out; /* 줌인 효과 부드럽게 */
   pointer-events: none;
 }
 
 .slide.active {
   opacity: 1;
+    transform: scale(1.1); /* 살짝 확대 */
   pointer-events: auto;
 }
-
 .slide-text {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* 가운데 정렬 */
+  top: 55%;
+  left: 200px; 
+  transform: translateY(-50%); /* 기본 위치 유지 */
   z-index: 2;
   color: white;
-  text-align: center; /* 텍스트 정렬 */
+  text-align: left;
   text-shadow: 1px 1px 10px rgba(0,0,0,0.7);
 }
 
-.slide-text h1 {
-  font-size: 4.5rem;
-  margin: 0 0 40px;
+/* 텍스트가 보이게 되는 상태 */
+.slide-text.active {
+  opacity: 1;
+  transform: translateY(-50%) translateY(0); /* 원래 자리 */
+}
+
+
+.slide-text h1 { 
+  font-size: 4rem; text-align: left; font-weight: 600;
+  margin: 0;
 }
 
 .slide-text p {
-  font-size: 2rem;
-  margin: 0;
+  font-size: 2rem; text-align: left;
+  margin-bottom: 40px; 
 }
 /********************************슬라이드 인디케이터*****************************/
 .slide-indicator {
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: 40px;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
@@ -339,10 +352,17 @@ body, html {
 }
 
 .slide-indicator .slide-dot.active {
-  width: 14px;
-  height: 14px;
-  background-color: white;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgb(0, 183, 255);
+  border: 2px solid rgb(0, 183, 255);
+  box-shadow: 0 0 8px rgba(0, 183, 255, 0.8),
+              0 0 12px rgba(0, 183, 255, 0.6),
+              0 0 16px rgba(0, 183, 255, 0.4);
+  transition: box-shadow 0.3s ease;
 }
+
 
 
 /******************section2*********************/
@@ -793,7 +813,7 @@ body, html {
 
 /******************section0*************************/
 #section0 {
-  min-height: 950px;
+  min-height: 100vh;
   background-color: #000000;
   background-size: cover;       /* 이미지가 영역을 꽉 채우도록 */
   background-position: center;  /* 중앙 정렬 */
@@ -808,22 +828,22 @@ body, html {
   font-size: 2rem;
   font-weight: bold;
   display: block;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
   color:#ffffff;
   text-align: left;
 }
-
+/*
 .typing {
   font-family: 'kopubmediom';
   white-space: nowrap;
   overflow: hidden;
-  border-right: 2px solid white; /* 깜빡이는 커서 */
+  border-right: 2px solid white; 
   width: fit-content;
   animation: blink-caret 0.75s step-end infinite;
   font-size: 2rem;
 }
 
-/* 커서 깜빡이는 애니메이션 */
+
 @keyframes blink-caret {
   from, to {
     border-color: transparent;
@@ -832,7 +852,7 @@ body, html {
     border-color: white;
   }
 }
-
+*/
 
 .business-grid3 {
   padding-left: 100vw; /* 뷰포트 절반 */
@@ -922,6 +942,7 @@ body, html {
   font-size: 20px;
   text-align: left;
 }
+/*********************************************************section4****************************/
 
 
 #section5 {
@@ -1201,32 +1222,31 @@ body, html {
   position: absolute;
   top: 0;
   left: 8px;
-  width: 5px;
+  width: 2px;
   height: 100%;
-  background-color: #ff5e00;
+  background-color: #b4b4b4;
   border-radius: 2px;
 }
-/* 🟠 윗쪽 원 */
+
 .history-item::after {
   content: "";
   position: absolute;
   top: 0;
-  left: 4px;
-  width: 12px;
-  height: 12px;
-  background-color: #ff5e00;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+  background-color: #b4b4b4;
   border-radius: 50%;
   z-index: 1;
 }
 
-/* 🟠 아랫쪽 원 */
 .history-item .circle-end {
   position: absolute;
   bottom: 0;
-  left: 4px;
-  width: 12px;
-  height: 12px;
-  background-color: #ff5e00;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+  background-color: #b4b4b4;
   border-radius: 50%;
   z-index: 1;
 }
@@ -1237,7 +1257,7 @@ body, html {
   margin-bottom: 100px; 
   font-size: 1.3rem; font-weight: 400;
   line-height: 3;
-  color: #333;
+  color: #2b2b2b;
   white-space: nowrap;
   overflow-x: visible;
   text-overflow: clip;
@@ -1258,219 +1278,43 @@ body, html {
   opacity: 1;
   transform: translateY(0);
 }
+/*************************************************오시는길***************************/
+#tab6 { position: relative; max-width: 1500px; margin: 0 auto;
+  padding: 60px 0; background: white; font-family: 'Noto Sans KR', sans-serif;
+   overflow: hidden; /* 불필요한 스크롤 제거 */ }
 
-
-/*******************************************************CONTACT.html*************************************************************/
-#contact-section1{
-  min-height: 80vh; 
-  padding: 20px;
-  box-sizing: border-box;
+.location-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 2rem;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  justify-content: flex-start; 
-  padding: 150px 10px 40px 10px; 
-}
-#contact-section1 h2{
-  font-size: 2rem;
-  margin-bottom: 5px;
-  font-family: 'kopubbold', sans-serif;
-}
-
-.contact-info {
-  display: static;
-  flex-direction: column;
-  gap: 10px; /* 줄 간격 */
-  font-size: 20px;
-}
-
-.info-row {
-  display: grid;
-  grid-template-columns: 200px auto;
-  align-items: center;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-}
-
-.info-row dt {
-  font-weight: bold;
-  font-family: 'kopubmediom', sans-serif;
-}
-
-.info-row dd {
-  margin: 0;
-  font-family: 'kopubmediom', sans-serif;
-}
-
-hr.contact-line {
-  width: 60%;
-  border: none;
-  border-bottom: 2px solid #ccc;
-  margin: 40px 10px;
-  position: relative;
-}
-
-#contact-section2 {
-  min-height: 80vh;
-  background-color: #b9d4ff;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;      /* ❗좌우 배치 핵심 */
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
+  max-width: 1800px;
+  margin: 0 auto;
   flex-wrap: wrap;
-  padding: 0;
-  font-size: 2rem;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  gap: 30px;
+  justify-content: space-between; background-color: transparent;
+  padding: 0 20px;
 }
 
+.location-block {
+  flex: 1 1 45%; 
+  background: transparent;
+  padding: 10px;
+  min-width: 600px; /* 한 줄에 최소한 들어갈 수 있는 크기 */
+  box-sizing: border-box;
+}
+.location-block h2{
+  font-size: 1.4rem; color:#000; text-align: left; font-weight: 450; margin-bottom: 10px;
+}
+.location-block p {
+  font-size: 20px; font-weight: 400; text-align: left; z-index: 1; color: #000; margin-top: 0;
+ } 
 
-.map {
-  width: 45%;                 
-  text-align: center;        
-}
-.map img {
-  width: 100%;               
-  height: auto;              
-  border-radius: 10px;        
-}
-.map p {
-  font-size: 1.2rem;
-  text-align: center;
-  font-family: 'kopubmediom', sans-serif;
-}
-
-/*project.html 화면*/
-#project-section1 {
-  background-color: black;
-  color: white;
-  padding: 100px 5vw;
-  font-family: 'Pretendard', sans-serif;
-}
-#project-section1 h3{
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 20px;
-  color:#0026ff;
-  font-family: 'kopubbold', sans-serif;
-}
-#project-section1 h2{
-  font-size: 1.6rem;
-  text-align: left ;
-  margin-bottom: 20px;
-  color:#ffffff;
-}
-#project-section1 h1{
-  font-size: 4rem;
-  text-align: left;
-  margin-bottom: 20px;
-  color:#ffffff;
-}
-
-.zigzag-block {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 80px;
-  gap: 40px;
-}
-
-.zigzag-block.reverse {
-  flex-direction: row-reverse;
-}
-
-.text-box {
-  flex: 1;
-  padding: 0 10px;
-}
-
-.text-box h2 {
-  font-size: 1.8rem;
-  margin-bottom: 10px;
-  color: #ffffff;
-}
-
-.text-box p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #cccccc;
-}
-
-.image-box {
-  flex: 1;
-}
-
-.image-box img {
+.map-frame {
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  background-color: #3c6cb4; /* 이미지 없을 때 배경 */
+  height: 360px;
+  overflow: hidden;
 }
 
-@media (max-width: 768px) {
-  .zigzag-block,
-  .zigzag-block.reverse {
-    flex-direction: column !important;
-    text-align: center;
-  }
-
-  .text-box, .image-box {
-    width: 100%;
-  }
-
-  .image-box img {
-    aspect-ratio: auto;
-  }
-}
-
-#project-section2 {
-  background-color: black;
-  color: white;
-  padding: 40px 5vw;
-  font-family: 'Pretendard', sans-serif;
-  gap: 40px;
-}
-
-#project-section2 h1{
-  font-size: 4rem;
-  text-align: left;
-  margin-bottom: 7px;
-  color:#ffffff;
-}
-.ICBMService {
-  font-size: 1.6rem;
-  text-align: left ;
-  margin-bottom: 50px;
-  color:#ffffff;
-}
-
-#project-section3 {
-  background-color: black;
-  color: white;
-  padding: 100px 5vw;
-}
-#project-section3 h1{
-  font-size: 4rem;
-  text-align: left;
-  margin-bottom: 20px;
-  color:#ffffff;
-}
-
-.project-section p{
-  font-size: 1.2rem;
-  text-align: left;
-  color:#ffffff;
-  font-family: 'kopubmediom', sans-serif;
-}
 
 /***************************business.html*******************************************************/
-
-
 #businesssectionimg {
   width: 100%;
   height: 500px;
@@ -1485,15 +1329,25 @@ hr.contact-line {
   color: white; animation: zoomIn 5s ease-in-out forwards; overflow-x: hidden;
 }
 
-/*#businesssectionimg video {
+/* 🔁 줌인 애니메이션 정의 */
+@keyframes zoomIn {
+  0% {
+    background-size: 100%;
+  }
+  100% {
+    background-size: 110%;
+  }
+}
+
+#businesssectionimg video {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 200px;
-  object-fit: cover; 
+  object-fit: cover;  /* 비디오를 꽉 차게 */
   z-index: 0;
-}*/
+}
 
 
 .section-title {
@@ -1506,41 +1360,7 @@ hr.contact-line {
   font-size: 3rem;
   text-align: center;
 }
-/********************************************************목차***************************************************************/
-.section-layout {
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
-  position: sticky;
-  top: 100px; 
-}
 
-.section-nav {
-  width: 200px;
-  padding-top: 20px;
-}
-
-.nav-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-list li {
-  font-size: 1rem;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  cursor: default;
-  color: #ccc;
-}
-
-.nav-icon {
-  width: 20px;
-  height: 20px;
-  background-color: transparent; /* 아이콘 영역 비워둠 */
-  margin-right: 10px;
-}
 /**************************************************************************************************/
 .businesssection1 {
   background: radial-gradient(circle at top left, #1a237e, #000);
@@ -1564,9 +1384,7 @@ hr.contact-line {
 }
 
 .SI-box {
-  flex: 1; 
-  min-width: 800px; /* 가로 제한 */
-  width: 100%;
+  min-width: 1000px;
   margin: 0 auto;
   padding: 40px;
   display: flex;
@@ -1588,7 +1406,7 @@ hr.contact-line {
 
 .SI-text {
   flex: 1; 
-  
+  min-width: 280px;
 }
 .SI-text p {
   flex: 1; 
@@ -1603,18 +1421,18 @@ hr.contact-line {
 }
 
 .description {  
-  font-size: 1.3rem; text-align: left; word-break: keep-all;
+  font-size: 1.1rem; text-align: left; word-break: keep-all;
   margin: 30px 0;
   line-height: 1.6;
 }
 .feature-list-grid {  
-  display: flex; text-align: left; word-break: keep-all; 
-  gap: 60px; line-height: 1.6; font-size: 1.2rem;
+  display: flex; text-align: left; word-break: keep-all;
+  gap: 60px;
   flex-wrap: wrap;
 }
 
 .feature-column {
-  list-style: none; line-height: 1.6;
+  list-style: none;
   padding: 0;
   flex: 1;
   min-width: 220px;
@@ -1622,12 +1440,12 @@ hr.contact-line {
 
 .feature-list {
   list-style: none; text-align: left; word-break: keep-all;
-  padding: 0;  line-height: 1.6; 
-  font-size: 1.2rem;
+  padding: 0;  line-height: 1.6;
+  font-size: 1rem;
 }
 
 .feature-list li {
-  margin-bottom: 10px;   font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 .section-content2 {
   display: flex;

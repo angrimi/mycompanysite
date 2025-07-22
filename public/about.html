@@ -11,7 +11,7 @@
     <div id="navbar-container"></div>
     
     <div class="scroll-container">
-        <div id="aboutsectionimg" class="section">
+        <div id="aboutsectionimg">
             <h2>회사소개</h2>
         </div>
 
@@ -30,7 +30,7 @@
         
         <div class="tab-content-container">
             <div class="tab-content active" id="tab1">
-                <section id="about-section1" class="section">
+                <section id="about-section1">
                     <div id="about" class="content">
                         <h1 class="sub">회사개요</h1>
                         <p>저희 레몬소프트는 시스템 안정과 탁월한 고객 만족을 핵심 가치로 삼아,<br>
@@ -243,16 +243,36 @@
                 <h1 class="sub">조직도</h1>
                 <img src="images/Oranizational chart.png">
             </div>
+            
             <div class="tab-content" id="tab6">
                 <h1 class="sub">오시는 길</h1>
-                <p></p>
+                
+                <div class="location-wrapper">
+                    <div class="location-block">
+                        <div class="map-frame">
+                            <div id="daumRoughmapContainer1753150882253" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+                        </div>
+                         <h2>본사</h2>
+                        <p>광주광역시 동구 필문대로 287번길 29-21 2층(지산동)</p>
+                    </div>
+                    <div class="location-block">
+                        <div class="map-frame">
+                            <div id="daumRoughmapContainer1753157246325" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+                        </div>
+                        <h2>연구소</h2>
+                         <p>광주광역시 북구 추암로 69 C동 2층(대촌동)</p>
+                    </div>
+                </div>
+
             </div>
         </div>
 
         
         <div id="footer-container"></div>
     </div>
+     <script src="script.js"></script>
+      <script charset="UTF-8" class="daum_roughmap_loader_script" 
+        src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
 
-   <script src="script.js"></script>
 </body>
 </html>
