@@ -325,14 +325,41 @@ body, html {
 }
 
 .slide-text h1 { 
-  font-size: 4rem; text-align: left; font-weight: 600;pointer-events: none;
-   margin-bottom: 30px; 
+  font-size: 4rem; text-align: left; font-weight: 600;pointer-events: none; user-select: none;
+     margin-top: 20px;  margin-bottom: 30px; 
 }
 
 .slide-text p {
-  font-size: 1.7rem; text-align: left;  font-weight: 500; margin-bottom: 5px; pointer-events: none;
-
+  font-size: 1.7rem; text-align: left;  font-weight: 500; margin-bottom: 0; pointer-events: none; user-select: none;
 }
+
+.scroll-down-icon {
+  position: absolute;
+  bottom: 30px;             /* 사진 기준으로 아래쪽에 배치 */
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 1.5s infinite;
+  pointer-events: none;
+  user-select: none;
+  z-index: 5;
+}
+.scroll-down-icon svg {
+  width: 45px;
+  height: 45px;
+  opacity: 0.8;
+}
+
+/* 애니메이션 */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+
 /********************************슬라이드 인디케이터*****************************/
 .slide-indicator {
   position: absolute;
@@ -379,11 +406,7 @@ body, html {
   padding:0;
   background-color: #ffffff;
   height: 100vh; overflow: hidden;
-
-  background-image: url('images/section2.png'); /* 이미지 경로 */
-  background-size: cover;           /* 비율 유지하면서 꽉 채움 */
-  background-position: center;      /* 가운데 정렬 */
-  background-repeat: no-repeat;     /* 반복 안함 */
+    /* 반복 안함 */
 }
 
 .project-slider {
