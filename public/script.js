@@ -17,6 +17,7 @@ window.addEventListener("DOMContentLoaded", () => {
       img.classList.toggle('active', i === index);
     });
 
+    // 텍스트 내용 바꾸기
     titleEl.textContent = texts[index].title;
     if (descEls.length > 1) {
       descEls[1].textContent = texts[index].desc;
@@ -24,13 +25,17 @@ window.addEventListener("DOMContentLoaded", () => {
       descEls[0].textContent = texts[index].desc;
     }
 
+    // 애니메이션 트리거: remove → reflow → add
+    slideText.classList.remove('active');
+    void slideText.offsetWidth;
+    slideText.classList.add('active');
+
+    // 인디케이터 처리
     dots.forEach((dot, i) => {
       dot.classList.toggle('active', i === index);
     });
-      slideText.classList.remove('active');      // 기존 active 제거
-      void slideText.offsetWidth;                 // 리플로우 강제 발생 (애니메이션 초기화)
-      slideText.classList.add('active');         // active 다시 붙이기 (애니메이션 재시작)
-  }
+}
+
 
   dots.forEach((dot, i) => {
     dot.addEventListener('click', () => {
@@ -104,7 +109,6 @@ container.addEventListener('wheel', (e) => {
 
     typing();
   });*/
-  //////////////////////section0->section2////////////////////
   
 
 
@@ -114,7 +118,7 @@ const projects = [
   {
     title: "AI 기반 분석 프로젝트",
     subtitleTop: "기술 융합 플랫폼",
-    subtitleBottom: "#AI API    #메타버스   #에너지 프로젝트    #AR 가술",
+    subtitleBottom: "#AI API    #메타버스   #에너지 프로젝트    #AR 기술",
     description: `레몬소프트의 IT 전문 기술은 AI, 메타버스, 에너지 솔루션, 증강현실 등 다양한 첨단 기술을 융합하여 사용자의 삶을 더 편리하고 스마트하게 만들어갑니다. 
     끊임없는 기술 연구와 혁신을 통해 미래를 선도하는 디지털 환경을 구축합니다. 끊임없는 기술 연구와 개발을 통해 변화하는 디지털 패러다임에 선도적으로 대응하며, 
     고객과 사회에 실질적인 가치를 제공하는 지속 가능한 IT 파트너로서의 비전을 실현해가고 있습니다.`,
@@ -505,3 +509,85 @@ function revealHistoryLinesForItem(itemElement) {
     });
   });
 });
+/************************************************공지사항 게시판************************************************* */
+window.addEventListener('DOMContentLoaded', () => {
+  const notices = [
+    { category: '공지', title: '신규 사무실 오픈 안내', date: '2025.07.20' },
+  { category: '뉴스', title: 'AI 연구팀 글로벌 컨퍼런스 참가', date: '2025.07.18' },
+  { category: '공지', title: '2025 하반기 인턴 모집 공고', date: '2025.07.15' },
+  { category: '개편', title: '웹사이트 디자인 리뉴얼 완료', date: '2025.07.10' },
+  { category: '뉴스', title: '에너지 관리 시스템 해외 수출 계약', date: '2025.07.05' },
+  { category: '행사', title: '2025 여름 워크숍 개최 안내', date: '2025.07.01' },
+  { category: '개편', title: '모바일 앱 기능 업데이트 적용', date: '2025.06.28' },
+  { category: '뉴스', title: 'Lemonsoft, 메타버스 스타트업 투자', date: '2025.06.25' },
+  { category: '공지', title: '보안 강화 점검 예정 안내', date: '2025.06.20' },
+  { category: '행사', title: '직원 건강검진 실시 안내', date: '2025.06.15' },
+    { category: '공지', title: '사무실 이전 관련 공지', date: '2025.04.28' },
+    { category: '뉴스', title: 'AI 기반 에너지 관리 솔루션 출시', date: '2025.04.22' },
+    { category: '공지', title: '상반기 채용 일정 안내', date: '2025.04.10' },
+    { category: '개편', title: '플랫폼 정기 점검 안내', date: '2025.04.07' },
+    { category: '뉴스', title: '협업 시스템 특허 등록', date: '2025.03.30' },
+    { category: '행사', title: 'K-ICT 2025 전시회 참가', date: '2025.03.21' },
+    { category: '개편', title: '고객 포털 보안 강화 안내', date: '2025.03.10' },
+    { category: '뉴스', title: '클라우드 연동 솔루션 해외 진출', date: '2025.03.01' },
+    { category: '공지', title: '설 연휴 고객센터 운영 안내', date: '2025.02.05' },
+    { category: '행사', title: '사내 해커톤 개최 안내', date: '2025.01.28' },
+    
+  ];
+
+  const noticesPerPage = 10;
+  let currentPage = 1;
+
+  function renderNotices() {
+    const list = document.getElementById('notice-list');
+    list.innerHTML = '';
+
+    const start = (currentPage - 1) * noticesPerPage;
+    const end = start + noticesPerPage;
+    const pageItems = notices.slice(start, end);
+
+    pageItems.forEach((notice, index) => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span class="category ${notice.category}">[${notice.category}]</span>
+        <span class="title">${notice.title}</span>
+        <span class="date">${notice.date}</span>
+      `;
+      li.onclick = () => showNotice(start + index);
+      list.appendChild(li);
+    });
+  }
+
+  function renderPagination() {
+    const totalPages = Math.ceil(notices.length / noticesPerPage);
+    const pagination = document.getElementById('pagination');
+    pagination.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      if (i === currentPage) btn.classList.add('active');
+      btn.onclick = () => {
+        currentPage = i;
+        renderNotices();
+        renderPagination();
+      };
+      pagination.appendChild(btn);
+    }
+  }
+
+  function showNotice(index) {
+    const detail = document.getElementById('notice-detail');
+    const item = notices[index];
+    detail.innerHTML = `
+      <h3>${item.title}</h3>
+      <p><strong>분류:</strong> ${item.category}</p>
+      <p><strong>날짜:</strong> ${item.date}</p>
+      <p>여기에 상세 내용을 작성할 수 있습니다.</p>
+    `;
+  }
+
+  renderNotices();
+  renderPagination();
+});
+

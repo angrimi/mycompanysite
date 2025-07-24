@@ -299,34 +299,39 @@ body, html {
   pointer-events: auto;
 }
 .slide-text {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s ease, transform 1s ease;
+  opacity: 1;
   position: absolute;
-  top: 55%;
-  left: 200px; 
-  transform: translateY(-50%); /* 기본 위치 유지 */
+  top: 35%;
+  left: 100px; 
   z-index: 2;
   color: white;
   text-align: left;
   text-shadow: 1px 1px 10px rgba(0,0,0,0.7);
 }
 
-/* 텍스트가 보이게 되는 상태 */
-.slide-text.active {
-  opacity: 1;
-  transform: translateY(-50%) translateY(0); /* 원래 자리 */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
 }
 
+.btn:hover {
+  background-color: #ffffff; color:#007bff; text-decoration: none;
+}
 
 .slide-text h1 { 
-  font-size: 4rem; text-align: left; font-weight: 600;
-  margin: 0;
+  font-size: 4rem; text-align: left; font-weight: 600;pointer-events: none;
+   margin-bottom: 30px; 
 }
 
 .slide-text p {
-  font-size: 2rem; text-align: left;
-  margin-bottom: 40px; 
+  font-size: 1.7rem; text-align: left;  font-weight: 500; margin-bottom: 5px; pointer-events: none;
+
 }
 /********************************슬라이드 인디케이터*****************************/
 .slide-indicator {
@@ -352,13 +357,13 @@ body, html {
 }
 
 .slide-indicator .slide-dot.active {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background-color: rgb(0, 183, 255);
-  border: 2px solid rgb(0, 183, 255);
-  box-shadow: 0 0 8px rgba(0, 183, 255, 0.8),
-              0 0 12px rgba(0, 183, 255, 0.6),
+  background-color: #007bff;
+  border: 2px solid #007bff;
+  box-shadow: 0 0 8px #1585fd,
+              0 0 12px #007bff,
               0 0 16px rgba(0, 183, 255, 0.4);
   transition: box-shadow 0.3s ease;
 }
@@ -375,7 +380,7 @@ body, html {
   background-color: #ffffff;
   height: 100vh; overflow: hidden;
 
-    background-image: url('images/section2.jpg.png'); /* 이미지 경로 */
+  background-image: url('images/section2.png'); /* 이미지 경로 */
   background-size: cover;           /* 비율 유지하면서 꽉 채움 */
   background-position: center;      /* 가운데 정렬 */
   background-repeat: no-repeat;     /* 반복 안함 */
@@ -391,7 +396,7 @@ body, html {
 .project-slider::before {
   content: "";
   position: absolute;
-  top: -200px;
+  top: -80px;
   right: -200px;
   width: 400px;
   height: 400px;
@@ -406,30 +411,12 @@ body, html {
   pointer-events: none;
   z-index: 0;
 }
-.project-slider::before {
-  content: "";
-  position: absolute;
-  top: -100px;
-  right: -100px;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(144, 46, 255, 0.384) 0%,   
-    rgba(162, 80, 255, 0.3) 60%,  
-    rgba(179, 113, 255, 0.1) 100%  
-  );
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 0;
-}
 
 .project-slider::after {
   content: "";
   position: absolute;
-  bottom: -200px;
-  left: -200px;
+  bottom: -100px;
+  left: -100px;
   width: 300px;
   height: 300px;
   border-radius: 50%;
@@ -476,12 +463,12 @@ body, html {
     .project-description h3 {
       font-size: 2.3rem;
       margin-bottom: 16px;
-      color: #ffffff;
+      color: #000000;
     }
 
     .project-description p {
       font-size: 1.3rem;
-      color: #ffffff;
+      color: #585858;
       line-height: 1.6;
     }
 
@@ -492,15 +479,15 @@ body, html {
   .subtitle-top {
   font-size: 1.2rem;
   letter-spacing: 0.5px;
-  color: hsl(182, 100%, 50%);
+  color: hsl(224, 100%, 50%);
   font-weight: 400;
   margin-bottom: 6px;
   text-transform: uppercase;
 }
 
 .subtitle-bottom {
-  font-size: 1.4rem;  font-weight: 500;
-  color: #ffffff;
+  font-size: 1.2rem;  font-weight: 500;
+  color: #505050;
   margin-top: 10px;
 }
 
@@ -514,18 +501,18 @@ body, html {
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-    .arrow {
+    .arrow1 {
       background-color: transparent;
       border: none;
       font-size: 2.5rem;
       cursor: pointer;
-      color: #ffffff !important;
+      color: #494949 !important;
       padding: 20px;
       transition: transform 0.2s;
       z-index: 10;
     }
 
-    .arrow:hover {
+    .arrow1:hover {
       transform: scale(1.1);
     }
 
@@ -982,75 +969,7 @@ body, html {
   font-size: 20px;
   text-align: left;
 }
-/*********************************************************section4***************************************************************/
-#section4 {
-  padding:10px 20px; /* 위아래 패딩 늘림 */ overflow-x: hidden;
-  background-color: #ffffff;
-  font-family: 'Noto Sans KR', sans-serif;
-  width: 100%;
-  min-height: 150vh;
-  box-sizing: border-box; 
-}
-.section4-title h2 {
-  text-align: center;
-  font-size: 2.4rem; color:#000;
-  margin-bottom: 100px;  margin-top: 100px;
-  font-weight: 700;
-}
 
-.patent-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-    row-gap: 40px;      /*위아래 */
-  column-gap: 30px;  
-}
-
-.patent-box {
-  position: relative; width: 350px; height: 470px; 
-  border-radius: 12px;
-  overflow: hidden; 
-  
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  transform: translateY(20px);
-  opacity: 0;
-  animation: fadeUp 0.6s ease-out forwards;
-  border: 2px solid transparent;
-  transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
-}
-
-.patent-box:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  border: 2px solid #2986ff; /* 파란 테두리 */
-}
-
-.patent-box img {
-  width: 300px;
-  height: 400px;
-  border-radius: 12px; 
-  display: block;
-  margin: 0 auto;
-     /* ✨ 이미지 정중앙 정렬용 추가 */
-  justify-content: center; /* 수평 중앙 */ padding-top: 10px;
-  align-items: center;     /* 수직 중앙 */
-}
-
-.patent-box h3 {
-  color:#000; text-align: center; margin-top: 15px; font-weight: 400;
-}
-
-.patent-box:nth-child(1) { animation-delay: 0.1s; }
-.patent-box:nth-child(2) { animation-delay: 0.2s; }
-/* ... 같은 방식으로 12번째까지 지정 */
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /*********************************************************section5***************************************************************/
 #section5 {
@@ -1213,7 +1132,10 @@ body, html {
 .tabspace {
   vertical-align: middle;
 }
-
+#aboutsection1 {
+  display: flex; justify-content: center;
+  align-items: center;
+}
 #aboutsectionimg h2 {
   font-size: 3rem; 
   z-index: 1;
@@ -1226,6 +1148,23 @@ body, html {
   color:#000000; text-align: center;
   font-family: 'kopubmediom', sans-serif;
 }
+#vision {
+  margin-bottom: 100px;
+}
+#about {
+  display: flex;                  /* 👈 꼭 필요해요! */
+  justify-content: center;       /* 수평 가운데 정렬 */
+  align-items: center;           /* 수직 가운데 정렬 */
+  flex-direction: column;        /* 요소들이 세로로 정렬되게 */
+  text-align: center;            /* 텍스트도 중앙 정렬 */  margin-bottom: 80px;
+}
+.hr {
+  border: none;                /* 기본 테두리 제거 */
+  height: 1px;                 /* 선 두께 */
+  background-color: #a3a3a3;   /* 선 색상 (파란색 예시) */
+  width: 90%;                  /* 선 길이 */
+  margin: 70px auto;           /* 가운데 정렬 + 여백 */
+}
 
 #about p{
   font-size: 20px; font-weight: 400px;
@@ -1235,7 +1174,22 @@ body, html {
 
 #aboutintro img{
   width: 600px; margin-bottom: 30px; 
-  height: 400px; 
+  height: 400px;  margin: auto;
+}
+#visionimg img{
+  width: 500px; margin-bottom: 30px;
+  height: 450px; margin: auto; 
+}
+#aboutintro img,
+#visionimg img {
+  display: block;
+  margin: 0 auto 30px;
+}
+
+#visioncontent p{
+  font-size: 20px;
+  color:#000000;
+  text-align: left; line-height: 1.6;
 }
 
 #tab2 h3{
@@ -1254,15 +1208,60 @@ body, html {
   color:#000000;
   margin-left: 700px;
 }
-#tab3 p{
-  font-size: 20px;
-  color:#000000;
-  text-align: left; line-height: 1.6;
+/*********************************************************section4***************************************************************/
+#section4 {
+  padding: 40px 60px;  /* 아래 여백 확보 */
+  background-color: #ffffff;
+  font-family: 'Noto Sans KR', sans-serif;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
-#tab3 img{
-  width: 500px; margin-bottom: 30px;
-  height: 450px;
+.patent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 50px 30px; /* row-gap, column-gap */
+  justify-items: center;
 }
+
+.patent-box {
+  position: relative; width: 350px; height: 470px; 
+  border-radius: 12px;
+  overflow: hidden; 
+  
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transform: translateY(20px);
+  opacity: 1;
+
+  border: 2px solid transparent;
+  transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+}
+
+.patent-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border: 2px solid #2986ff; /* 파란 테두리 */
+}
+
+.patent-box img {
+  width: 300px;
+  height: 400px;
+  border-radius: 12px; 
+  display: block;
+  margin: 0 auto;
+     /* ✨ 이미지 정중앙 정렬용 추가 */
+  justify-content: center; /* 수평 중앙 */ padding-top: 10px;
+  align-items: center;     /* 수직 중앙 */
+}
+
+.patent-box h3 {
+  color:#000; text-align: center; margin-top: 15px; font-weight: 400; font-size: 20px;
+}
+
+
 #tab5 img{
   width: 900px; margin-bottom: 30px; margin-top: 30px;
   height: 500px;
@@ -1756,7 +1755,7 @@ body, html {
   z-index: 1; font-weight: 500;
 }
 .arrow { 
-  font-size: 32px; margin-top: 50px;
+  font-size: 32px; margin-top: 70px;
   color: #3b3b3b;
 }
 /*************************************pr**********************************/
@@ -1801,14 +1800,13 @@ body, html {
 /****************************************************************************************/
 .prsection1 {
   padding: 40px;
-  background-color: #f9f9f9;
+  background-color:transparent;
   font-family: 'Segoe UI', '맑은 고딕', sans-serif; max-width: 800px;
       margin: auto;
 }
 
-h2 {
-  margin-bottom: 20px;
-  color: #ffffff;
+.prsection1 h2 {
+  margin-bottom: 40px; text-align: center; color:#000; 
 }
 
 ul.notice-list {
@@ -1820,16 +1818,25 @@ ul.notice-list {
 ul.notice-list li {
   display: flex;
   justify-content: space-between;
-  padding: 15px;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  margin-bottom: 10px;
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd; /* 항목 아래 선 추가 */
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
+.notice-list li .left {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 카테고리와 제목 사이 간격 */
+}
+.notice-list li .date {
+  margin-left: auto; /* 오른쪽으로 밀기 */
+}
+ul.notice-list li:last-child {
+  border-bottom: none; /* 마지막 항목은 선 제거 */
+}
 
 ul.notice-list li:hover {
-  background-color: #eef6ff;
+ font-size: 1.05em;
 }
 
 .category {
@@ -1837,9 +1844,10 @@ ul.notice-list li:hover {
   width: 80px;
 }
 
-.event { color: #2c7be5; }
-.media { color: #9c27b0; }
-
+.notice { color: #2c7be5; }
+.news { color: #6302ff; }
+.event {color: #37c24a}
+.update{color: #ff530f}
 .notice-detail {
   display: none;
   margin-top: 30px;
@@ -1851,4 +1859,27 @@ ul.notice-list li:hover {
 
 .notice-detail h3 {
   margin-top: 0;
+}
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.pagination button.active {
+  font-weight: bold;
+  border-bottom: 2px solid #000;
+}
+
+.pagination button:hover {
+  color: #007BFF;
 }
