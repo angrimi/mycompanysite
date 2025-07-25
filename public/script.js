@@ -509,6 +509,35 @@ function revealHistoryLinesForItem(itemElement) {
     });
   });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  // recruitsection2 영역 애니메이션
+  const recruitSection = document.querySelector('#recruitsection2');
+
+  const sectionObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sectionObserver.observe(recruitSection);
+
+  // text-table 각각 애니메이션
+  const tables = document.querySelectorAll('.text-table');
+
+  const tableObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  tables.forEach(table => tableObserver.observe(table));
+});
+
 /************************************************공지사항 게시판************************************************* */
 window.addEventListener('DOMContentLoaded', () => {
   const notices = [
