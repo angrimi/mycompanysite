@@ -1479,16 +1479,12 @@ body, html {
 }
 
 
-.section-title {
-  position: absolute;          /* 배경 위에 고정 */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);  /* 정확히 가운데 정렬 */
+#businesssectionimg h2 {
+    font-size: 3rem; 
   z-index: 1;
-  color: white; 
-  font-size: 3rem;
-  text-align: center;
+  margin-bottom: 40px;
 }
+
 
 /**********************************************************************************************************************************************************/
 .businesssection1 {
