@@ -8,7 +8,7 @@
 @font-face { font-family: 'kopubbold'; src: url('fonts/KoPub\ Dotum\ Bold.ttf') format('truetype'); font-weight: normal; font-style: normal; }
 @font-face { font-family: 'paperlogy7'; src: url('fonts/Paperlogy-7Bold.ttf') format('truetype'); font-weight: normal; font-style: normal; }
 #footer {
-  background-color: #000000;
+  background-color: #000321;
   color: rgb(221, 221, 221);
   padding: 90px 20px;
   box-sizing: border-box;
@@ -154,7 +154,7 @@ body, html {
   color: white;
 }
 #navbar:hover ul li a:hover {
-  background: linear-gradient(to right, #fcf3a7, #9cdafc);
+  background: linear-gradient(to right, #fff490, #ffa41c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -163,7 +163,7 @@ body, html {
 /* 기본 hover 그라데이션 효과 */
 #navbar ul li a:hover,
 #navbar ul li.active > a {
-  background: linear-gradient(to right, #fcf3a7, #9cdafc);
+  background: linear-gradient(to right, #fff490, #ffa41c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -171,7 +171,7 @@ body, html {
 }
 
 #navbar.scrolled ul li a:hover {
-  background: linear-gradient(to right, #fcf3a7, #9cdafc);
+  background: linear-gradient(to right, #fff490, #ffa41c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text; 
