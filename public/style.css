@@ -1160,30 +1160,43 @@ body, html {
 
 /*********************************************************tab**********************************************/
 .tab-container {
-  display: table;  table-layout: fixed;  
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap; /* 한 줄로 유지 */
   margin: 50px auto;
-  border-collapse: collapse;
   font-family: sans-serif;
-  position: relative; 
-}
-
-.tab-row {
-  display: table-row;
+  position: relative;   border-bottom: 1px solid #ccc;
 }
 
 .tab-btn {
-  display: table-cell; width: 300px; height: 55px;
-  border: 1px solid #ccc;
+  flex: 1;
+  max-width: 800px;
+  height: 55px;   margin: 0 10px;
   background-color: white;
-  color: black; font-size: 16px; font-weight: 400; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #333;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   cursor: pointer;
   text-align: center;
-  transition: background-color 0.3s, color 0.3s;
+  vertical-align: middle;
+  transition: border-bottom 0.3s ease, color 0.3s ease, background-color 0.3s ease;
   white-space: nowrap;
+  align-items: center;    /* 세로 정렬 */
+  justify-content: center;
 }
+
 .tab-btn.active {
-  background-color: #0047b9;
-  color: white;
+  border-bottom: 2px solid #0047b9;
+  color: #0047b9;
+  font-weight: 500;
+}
+
+
+.tabspace {
+  display: none; /* 탭 간 여백이 필요 없다면 숨김 처리 */
 }
 
 .tab-content {
