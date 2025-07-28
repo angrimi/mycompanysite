@@ -2044,3 +2044,27 @@ ul.notice-list li:hover {
 .pagination button:hover {
   color: #007BFF;
 }
+
+.tabs {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 6px 14px;         /* 위아래 여백 약간 늘림 */
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 6px;
+  background-color: transparent; /* 배경 없애기 */
+  border: none;
+  border-bottom: 3px solid transparent; /* 밑줄 공간 확보 */
+  color: #333;                 /* 기본 글자색 */
+  cursor: pointer;
+  border-radius: 0;            /* 둥근 모서리 제거 */
+  transition: color 0.2s ease, border-bottom-color 0.2s ease;
+}
+
+.tab-btn.active {
+  color: #0b083d;               /* 선택된 탭 글자색 */
+  border-bottom-color: #0b083d; /* 선택된 탭 밑줄 색 */
+}

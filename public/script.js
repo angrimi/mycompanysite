@@ -455,15 +455,15 @@ document.addEventListener('DOMContentLoaded', function () {
 window.addEventListener('DOMContentLoaded', () => {
   const notices = [
     { category: '공지', title: '신규 사무실 오픈 안내', date: '2025.07.20' },
-  { category: '뉴스', title: 'AI 연구팀 글로벌 컨퍼런스 참가', date: '2025.07.18' },
-  { category: '공지', title: '2025 하반기 인턴 모집 공고', date: '2025.07.15' },
-  { category: '개편', title: '웹사이트 디자인 리뉴얼 완료', date: '2025.07.10' },
-  { category: '뉴스', title: '에너지 관리 시스템 해외 수출 계약', date: '2025.07.05' },
-  { category: '행사', title: '2025 여름 워크숍 개최 안내', date: '2025.07.01' },
-  { category: '개편', title: '모바일 앱 기능 업데이트 적용', date: '2025.06.28' },
-  { category: '뉴스', title: 'Lemonsoft, 메타버스 스타트업 투자', date: '2025.06.25' },
-  { category: '공지', title: '보안 강화 점검 예정 안내', date: '2025.06.20' },
-  { category: '행사', title: '직원 건강검진 실시 안내', date: '2025.06.15' },
+    { category: '뉴스', title: 'AI 연구팀 글로벌 컨퍼런스 참가', date: '2025.07.18' },
+    { category: '공지', title: '2025 하반기 인턴 모집 공고', date: '2025.07.15' },
+    { category: '개편', title: '웹사이트 디자인 리뉴얼 완료', date: '2025.07.10' },
+    { category: '뉴스', title: '에너지 관리 시스템 해외 수출 계약', date: '2025.07.05' },
+    { category: '행사', title: '2025 여름 워크숍 개최 안내', date: '2025.07.01' },
+    { category: '개편', title: '모바일 앱 기능 업데이트 적용', date: '2025.06.28' },
+    { category: '뉴스', title: 'Lemonsoft, 메타버스 스타트업 투자', date: '2025.06.25' },
+    { category: '공지', title: '보안 강화 점검 예정 안내', date: '2025.06.20' },
+    { category: '행사', title: '직원 건강검진 실시 안내', date: '2025.06.15' },
     { category: '공지', title: '사무실 이전 관련 공지', date: '2025.04.28' },
     { category: '뉴스', title: 'AI 기반 에너지 관리 솔루션 출시', date: '2025.04.22' },
     { category: '공지', title: '상반기 채용 일정 안내', date: '2025.04.10' },
@@ -474,19 +474,23 @@ window.addEventListener('DOMContentLoaded', () => {
     { category: '뉴스', title: '클라우드 연동 솔루션 해외 진출', date: '2025.03.01' },
     { category: '공지', title: '설 연휴 고객센터 운영 안내', date: '2025.02.05' },
     { category: '행사', title: '사내 해커톤 개최 안내', date: '2025.01.28' },
-    
   ];
 
   const noticesPerPage = 10;
   let currentPage = 1;
+  let filteredCategory = '전체';
 
   function renderNotices() {
     const list = document.getElementById('notice-list');
     list.innerHTML = '';
 
+    const filteredNotices = filteredCategory === '전체'
+      ? notices
+      : notices.filter(n => n.category === filteredCategory);
+
     const start = (currentPage - 1) * noticesPerPage;
     const end = start + noticesPerPage;
-    const pageItems = notices.slice(start, end);
+    const pageItems = filteredNotices.slice(start, end);
 
     pageItems.forEach((notice, index) => {
       const li = document.createElement('li');
@@ -495,13 +499,17 @@ window.addEventListener('DOMContentLoaded', () => {
         <span class="title">${notice.title}</span>
         <span class="date">${notice.date}</span>
       `;
-      li.onclick = () => showNotice(start + index);
+      li.onclick = () => showNotice(filteredNotices, start + index);
       list.appendChild(li);
     });
   }
 
   function renderPagination() {
-    const totalPages = Math.ceil(notices.length / noticesPerPage);
+    const filteredNotices = filteredCategory === '전체'
+      ? notices
+      : notices.filter(n => n.category === filteredCategory);
+
+    const totalPages = Math.ceil(filteredNotices.length / noticesPerPage);
     const pagination = document.getElementById('pagination');
     pagination.innerHTML = '';
 
@@ -518,9 +526,9 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function showNotice(index) {
+  function showNotice(list, index) {
     const detail = document.getElementById('notice-detail');
-    const item = notices[index];
+    const item = list[index];
     detail.innerHTML = `
       <h3>${item.title}</h3>
       <p><strong>분류:</strong> ${item.category}</p>
@@ -529,6 +537,20 @@ window.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  // 탭 버튼 클릭 이벤트
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      filteredCategory = btn.getAttribute('data-category');
+      currentPage = 1;
+      renderNotices();
+      renderPagination();
+    });
+  });
+
+  // 초기 렌더링
   renderNotices();
   renderPagination();
 });
